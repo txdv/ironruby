@@ -24,25 +24,6 @@ SVN_ROOT = Pathname.new 'c:/svn/trunk'
 EXCLUDED_EXTENSIONS   = %w[.old .suo .vspscc .vssscc .user .log .pdb .cache .swp]
 DEFAULT_ROBOCOPY_OPTIONS = "/XF *#{EXCLUDED_EXTENSIONS.join(' *')} /NP /COPY:DAT /A-:R "
 
-class Dir
-class << self
-    alias :orig_chdir :chdir
-end
-#makes Directory searching case insensitive
-    def self.[](files)
-      results = []
-      files.each do |file|
-          results |= Dir.glob(file, File::FNM_CASEFOLD)
-      end
-      results
-    end
-    
-    def chdir(directory)
-       Dir.orig_chdir Dir.glob(directory, File::FNM_CASEFOLD).first
-    end
-end
-
-
 class Pathname
   def filtered_subdirs(extras = [])
     return [] unless exist?
@@ -314,8 +295,7 @@ class ProjectContext
     def get_source_dir(name)
       mapping = get_mapping name
       context_path = @project_context.source
-      context_path += (@project_context.is_merlin? ? mapping.merlin_path : mapping.svn_path)
-      Dir.glob(context_path, File::FNM_CASEFOLD).first
+      context_path + (@project_context.is_merlin? ? mapping.merlin_path : mapping.svn_path)
     end
 
     # Getting the target directory path is the same as source except for the
@@ -490,7 +470,7 @@ class ProjectContext
     end
 
     def build_path
-      Pathname.new get_source_dir(:build) + "/#{clr == :desktop ? configuration : "#{clr}_#{configuration}"}/"
+      get_source_dir(:build) + "#{clr == :desktop ? configuration : "#{clr}_#{configuration}"}"
     end
 
     def compiler_switches
