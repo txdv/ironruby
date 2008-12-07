@@ -25,6 +25,9 @@ EXCLUDED_EXTENSIONS   = %w[.old .suo .vspscc .vssscc .user .log .pdb .cache .swp
 DEFAULT_ROBOCOPY_OPTIONS = "/XF *#{EXCLUDED_EXTENSIONS.join(' *')} /NP /COPY:DAT /A-:R "
 
 class Dir
+class << self
+    alias :orig_chdir :chdir
+end
 #makes Directory searching case insensitive
     def self.[](files)
       results = []
@@ -32,6 +35,10 @@ class Dir
           results |= Dir.glob(file, File::FNM_CASEFOLD)
       end
       results
+    end
+    
+    def chdir(directory)
+       Dir.orig_chdir Dir.glob(directory, File::FNM_CASEFOLD).first
     end
 end
 
@@ -307,7 +314,8 @@ class ProjectContext
     def get_source_dir(name)
       mapping = get_mapping name
       context_path = @project_context.source
-      context_path + (@project_context.is_merlin? ? mapping.merlin_path : mapping.svn_path)
+      context_path += (@project_context.is_merlin? ? mapping.merlin_path : mapping.svn_path)
+      Dir.glob(context_path, File::FNM_CASEFOLD).first
     end
 
     # Getting the target directory path is the same as source except for the
@@ -482,7 +490,7 @@ class ProjectContext
     end
 
     def build_path
-      get_source_dir(:build) + "#{clr == :desktop ? configuration : "#{clr}_#{configuration}"}"
+      Pathname.new get_source_dir(:build) + "/#{clr == :desktop ? configuration : "#{clr}_#{configuration}"}/"
     end
 
     def compiler_switches
