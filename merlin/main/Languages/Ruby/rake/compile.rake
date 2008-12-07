@@ -25,7 +25,7 @@ end
 desc "compile extension attribute assembly" 
 task :compile_extension_attributes => [:clean_build] do
   IronRuby.source_context do
-    compile :dlr_core, :references => ['!System.dll'], :switches => ['target:library'], :output => 'Microsoft.Scripting.ExtensionAttribute.dll', :csproj => 'microsoft.scripting.extensionattribute.csproj'
+    compile :dlr_core, :references => ['!System.dll'], :switches => ['target:library'], :output => 'Microsoft.Scripting.ExtensionAttribute.dll', :csproj => 'Microsoft.Scripting.ExtensionAttribute.csproj'
   end
 end
 

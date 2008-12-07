@@ -43,7 +43,7 @@ class Pathname
 
   def filtered_files
     raise "Cannot call filtered_files on a filename path: #{self}" if !directory?
-    files.find_all { |f| !EXCLUDED_EXTENSIONS.include?((self + f).extname) }.map { |f| f.downcase }
+    files.find_all { |f| !EXCLUDED_EXTENSIONS.include?((self + f).extname) }
   end
 end
 
@@ -367,20 +367,20 @@ class ProjectContext
       nodes = [:root, :gppg, :dlr_core, :dlr_libs, :dlr_com, :ironruby, :libraries, :tests, :console, :generator, :test_runner, :scanner, :yaml, :stdlibs, :ironlibs]
       nodes.each do |node|
         if is_recursive? node
-          source_dirs += (temp_dir + get_relative_target_dir(node)).filtered_subdirs.map { |d| d.relative_path_from(temp_dir).downcase }
+          source_dirs += (temp_dir + get_relative_target_dir(node)).filtered_subdirs.map { |d| d.relative_path_from(temp_dir) }
 
           # Target directory may not exist, so we only add if we find it there
           if get_target_dir(node).directory?
-            target_dirs += get_target_dir(node).filtered_subdirs.map { |d| d.relative_path_from(@project_context.target).downcase }
+            target_dirs += get_target_dir(node).filtered_subdirs.map { |d| d.relative_path_from(@project_context.target) }
           end
         else
           # This is also an unusual case - since there is a 1:1 mapping by
           # definition in a non-recursive directory mapping, this will be
           # flagged only as a change candidate and not an add or a delete.
-          source_dirs << get_relative_target_dir(node).downcase
+          source_dirs << get_relative_target_dir(node)
 
           # Target directory may not exist, so we only add if we find it there
-          target_dirs << get_relative_target_dir(node).downcase if get_target_dir(node).directory?
+          target_dirs << get_relative_target_dir(node) if get_target_dir(node).directory?
         end
       end
 
@@ -640,7 +640,7 @@ class ProjectContext
 
   private
   def self.init_context
-    @rakefile_dir = Pathname.new(File.dirname(File.expand_path(__FILE__)).downcase)
+    @rakefile_dir = Pathname.new(File.dirname(File.expand_path(__FILE__)))
 
     if ENV['MERLIN_ROOT'].nil?
       # Initialize the context for an external contributor who builds from
@@ -650,8 +650,8 @@ class ProjectContext
     else
       # Initialize @source and @target to point to the right places based
       # on whether we are within MERLIN_ROOT or SVN_ROOT
-      @merlin_root = Pathname.new(ENV['MERLIN_ROOT'].downcase) + '../../' # hack for changes in TFS layout
-      @ruby_root = @merlin_root + 'merlin/main/languages/ruby'
+      @merlin_root = Pathname.new(ENV['MERLIN_ROOT']) + '../../' # hack for changes in TFS layout
+      @ruby_root = @merlin_root + 'merlin/main/Languages/Ruby'
 
       if @rakefile_dir == @ruby_root
         @source = @merlin_root
@@ -749,7 +749,7 @@ class IronRuby < ProjectContext
   map :scanner, :merlin => 'merlin/main/Languages/Ruby/utils/ironruby.libraries.scanner', :svn => 'utils/ironruby.libraries.scanner'
   map :build, :merlin => 'merlin/main/bin', :svn => 'build'
   map :stdlibs, :merlin => 'merlin/external/languages/ruby/redist-libs', :svn => 'lib'
-  map :ironlibs, :merlin => 'merlin/main/languages/ruby/libs', :svn => 'lib/IronRuby'
+  map :ironlibs, :merlin => 'merlin/main/Languages/Ruby/libs', :svn => 'lib/IronRuby'
   map :lang_root, :merlin => 'merlin/main', :svn => '.'
 end
 
@@ -845,7 +845,6 @@ class UserEnvironment
   # Find path to named executable
 
   def self.find_executable(executable)
-    executable.downcase!
     result = []
     search_path = ENV['PATH'].split(File::PATH_SEPARATOR)
     search_path.each do |dir|
