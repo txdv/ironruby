@@ -734,19 +734,19 @@ class ProjectContext
 end
 
 class IronRuby < ProjectContext
-  map :root, :merlin => 'merlin/main/languages/ruby', :svn => '.', :recurse => false
+  map :root, :merlin => 'merlin/main/Languages/Ruby', :svn => '.', :recurse => false
   map :gppg, :merlin => 'merlin/main/utilities/gppg', :svn => 'bin', :recurse => false
   map :dlr_core, :merlin => 'ndp/fx/src/core/microsoft/scripting', :svn => 'src/microsoft.scripting.core'
   map :dlr_libs, :merlin => 'merlin/main/runtime/microsoft.scripting', :svn => 'src/microsoft.scripting'
   map :dlr_com, :merlin => 'ndp/fx/src/dynamic', :svn => 'src/dynamic'
-  map :ironruby, :merlin => 'merlin/main/languages/ruby/ruby', :svn => 'src/ironruby'
-  map :libraries, :merlin => 'merlin/main/languages/ruby/libraries.lca_restricted', :svn => 'src/IronRuby.Libraries'
+  map :ironruby, :merlin => 'merlin/main/Languages/Ruby/ruby', :svn => 'src/ironruby'
+  map :libraries, :merlin => 'merlin/main/Languages/Ruby/libraries.lca_restricted', :svn => 'src/IronRuby.Libraries'
   map :yaml, :merlin => 'merlin/external/languages/ironruby/yaml/ironruby.libraries.yaml', :svn => 'src/yaml'
-  map :tests, :merlin => 'merlin/main/languages/ruby/tests', :svn => 'tests/ironruby'
-  map :console, :merlin => 'merlin/main/languages/ruby/console', :svn => 'utils/ironruby.console'
-  map :generator, :merlin => 'merlin/main/languages/ruby/classinitgenerator', :svn => 'utils/ironruby.classinitgenerator'
-  map :test_runner, :merlin => 'merlin/main/languages/ruby/ironruby.tests', :svn => 'utils/IronRuby.Tests'
-  map :scanner, :merlin => 'merlin/main/languages/ruby/utils/ironruby.libraries.scanner', :svn => 'utils/ironruby.libraries.scanner'
+  map :tests, :merlin => 'merlin/main/Languages/Ruby/tests', :svn => 'tests/ironruby'
+  map :console, :merlin => 'merlin/main/Languages/Ruby/console', :svn => 'utils/ironruby.console'
+  map :generator, :merlin => 'merlin/main/Languages/Ruby/classinitgenerator', :svn => 'utils/ironruby.classinitgenerator'
+  map :test_runner, :merlin => 'merlin/main/Languages/Ruby/ironruby.tests', :svn => 'utils/IronRuby.Tests'
+  map :scanner, :merlin => 'merlin/main/Languages/Ruby/utils/ironruby.libraries.scanner', :svn => 'utils/ironruby.libraries.scanner'
   map :build, :merlin => 'merlin/main/bin', :svn => 'build'
   map :stdlibs, :merlin => 'merlin/external/languages/ruby/redist-libs', :svn => 'lib'
   map :ironlibs, :merlin => 'merlin/main/languages/ruby/libs', :svn => 'lib/IronRuby'
