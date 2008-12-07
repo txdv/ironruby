@@ -24,6 +24,17 @@ SVN_ROOT = Pathname.new 'c:/svn/trunk'
 EXCLUDED_EXTENSIONS   = %w[.old .suo .vspscc .vssscc .user .log .pdb .cache .swp]
 DEFAULT_ROBOCOPY_OPTIONS = "/XF *#{EXCLUDED_EXTENSIONS.join(' *')} /NP /COPY:DAT /A-:R "
 
+class Dir
+#makes Directory searching case insensitive
+    def self.[](files)
+      results = []
+      files.each do |file|
+          results |= Dir.glob(file, File::FNM_CASEFOLD)
+      end
+      results
+    end
+end
+
 
 class Pathname
   def filtered_subdirs(extras = [])
@@ -206,7 +217,7 @@ Configuration.define do
   if ENV['mono'].nil?
     group(:desktop) {
       framework_path [Pathname.new(ENV['windir'].dup) + 'Microsoft.NET/Framework/v2.0.50727',
-                      Pathname.new('c:\program files\reference assemblies\microsoft\framework\v3.5')]
+                      Pathname.new('c:/program files/reference assemblies/microsoft/framework/v3.5')]
     }
     group(:silverlight) {
       framework_path [Pathname.new('c:/program files/microsoft silverlight/2.0.30523.6')]
@@ -215,7 +226,7 @@ Configuration.define do
     group(:mono) {
       framework_path {
         libdir = IO.popen('pkg-config --variable=libdir mono').read.strip
-        [Pathname.new(libdir) + 'mono' + '2.0']
+        [Pathname.new(libdir) + 'mono' + '2.0', Pathname.new('/usr/lib/mono/2.0/')]
       }
       switches :all, 'noconfig'
       remove_switches ['warnaserror+']
@@ -503,6 +514,7 @@ class ProjectContext
     def get_compile_path_list(csproj)
       csproj ||= '*.csproj' 
       cs_proj_files = Dir[csproj]
+      if cs_proj_files.length == 0 then raise ArgumentError.new("Could not find .csproj file in directory! #{csproj}") end
       if cs_proj_files.length == 1
         doc = REXML::Document.new(File.open(cs_proj_files.first))
         result = doc.elements.collect("/Project/ItemGroup/Compile") { |c| c.attributes['Include'] }
