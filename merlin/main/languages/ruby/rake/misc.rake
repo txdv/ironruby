@@ -104,7 +104,7 @@ desc "is the environment setup for an IronRuby dev?"
 task :happy do
   IronRuby.source_context do
     commands = ENV['mono'].nil? ? ['resgen.exe', 'csc.exe'] : ['resgen', 'gmcs']
-    commands += ['tf.exe', 'svn.exe'] if IronRuby.is_merlin?
+    commands += ['tf.exe', 'svn.exe'] if IronRuby.is_merlin? unless ENV['microsoft'].nil?
 
     paths = ENV['PATH'].split(File::PATH_SEPARATOR).collect { |path| Pathname.new path }
 
