@@ -540,7 +540,6 @@ class ProjectContext
         options = get_compile_path_list(args[:csproj]).join("\n")
         temp.puts options
         temp.close
-        
         cmd << " @" << temp.path
         exec cmd
       end
@@ -737,7 +736,7 @@ class IronRuby < ProjectContext
   map :root, :merlin => 'merlin/main/Languages/Ruby', :svn => '.', :recurse => false
   map :gppg, :merlin => 'merlin/main/utilities/gppg', :svn => 'bin', :recurse => false
   map :dlr_core, :merlin => 'ndp/fx/src/core/microsoft/scripting', :svn => 'src/microsoft.scripting.core'
-  map :dlr_libs, :merlin => 'merlin/main/runtime/microsoft.scripting', :svn => 'src/microsoft.scripting'
+  map :dlr_libs, :merlin => 'merlin/main/Runtime/Microsoft.Scripting', :svn => 'src/microsoft.scripting'
   map :dlr_com, :merlin => 'ndp/fx/src/dynamic', :svn => 'src/dynamic'
   map :ironruby, :merlin => 'merlin/main/Languages/Ruby/ruby', :svn => 'src/ironruby'
   map :libraries, :merlin => 'merlin/main/Languages/Ruby/libraries.lca_restricted', :svn => 'src/IronRuby.Libraries'

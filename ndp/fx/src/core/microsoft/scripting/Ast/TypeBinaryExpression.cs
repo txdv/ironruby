@@ -90,7 +90,7 @@ namespace System.Linq.Expressions {
             // Create a temp so we only evaluate the left side once
             parameter = Parameter(typeof(object), null);
             return Expression.Block(
-                new[] { parameter },
+                new List<ParameterExpression>(new[] { parameter }),
                 Expression.Assign(parameter, Helpers.Convert(Expression, typeof(object))),
                 ByValParameterTypeEqual(parameter)
             );

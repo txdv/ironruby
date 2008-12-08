@@ -1,4 +1,4 @@
-﻿/* ****************************************************************************
+/* ****************************************************************************
  *
  * Copyright (c) Microsoft Corporation. 
  *
@@ -18,6 +18,7 @@ using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Dynamic.Utils;
+using System.Collections.Generic;
 
 namespace System.Dynamic {
     /// <summary>
@@ -409,7 +410,7 @@ namespace System.Dynamic {
 
                 var callDynamic = new MetaObject(
                     Expression.Block(
-                        new[] { result },
+                        new List<ParameterExpression>(new[] {result}),
                         Expression.Condition(
                             Expression.Call(
                                 GetLimitedSelf(),
@@ -461,7 +462,7 @@ namespace System.Dynamic {
 
                 var callDynamic = new MetaObject(
                     Expression.Block(
-                        new[] { result },
+                        new List<ParameterExpression>(new[] {result}),
                         Expression.Condition(
                             Expression.Call(
                                 GetLimitedSelf(),

@@ -1500,9 +1500,11 @@ namespace Microsoft.Scripting.Interpretation {
                     () => new GeneratorInvoker(generator, state.CreateForGenerator(caller)).Invoke
                 );
             } else {
-                return new GeneratorEnumerator<T>(
-                    new GeneratorInvoker(generator, state.CreateForGenerator(caller)).Invoke
-                );
+	      	return new GeneratorEnumerator<T>(
+                new GeneratorInvoker(generator, state.CreateForGenerator(caller)).Invoke
+		);
+
+                
             }
         }
 

@@ -18,6 +18,7 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using Microsoft.Scripting.Utils;
 using Microsoft.Scripting.Actions;    
+using System.Collections.Generic;
 
 namespace Microsoft.Scripting.Generation {
     /// <summary>
@@ -37,7 +38,7 @@ namespace Microsoft.Scripting.Generation {
 
             // ($site = siteExpr).Target.Invoke($site, *args)
             return Expression.Block(
-                new [] { siteVar },
+                new List<ParameterExpression>(new [] { siteVar }),
                 Expression.Call(
                     Expression.Field(
                         Expression.Assign(siteVar, siteExpr),

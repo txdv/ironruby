@@ -99,7 +99,7 @@ namespace Microsoft.Scripting.Ast {
                 Expression.Lambda(
                     generatorNextOfT,
                     Expression.Block(
-                        new ParameterExpression[] { _gotoRouter },
+                        new List<ParameterExpression>(new ParameterExpression[] { _gotoRouter }),
                         Expression.Switch(Expression.Assign(_gotoRouter, _state), cases),
                         body,
                         Expression.Assign(_state, Expression.Constant(Finished)),

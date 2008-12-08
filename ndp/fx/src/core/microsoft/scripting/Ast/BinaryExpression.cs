@@ -179,7 +179,7 @@ namespace System.Linq.Expressions {
                 Expression e4 = temp2;
 
                 return Expression.Block(
-                    new ParameterExpression[] { temp1, temp2 },
+                    new List<ParameterExpression>(new ParameterExpression[] { temp1, temp2 }),
                     e1, e2, e3, e4
                 );
             }

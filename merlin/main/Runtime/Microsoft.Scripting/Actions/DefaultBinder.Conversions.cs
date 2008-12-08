@@ -20,6 +20,7 @@ using System.Dynamic;
 using Microsoft.Scripting.Generation;
 using Microsoft.Scripting.Runtime;
 using Microsoft.Scripting.Utils;
+using System.Collections.Generic;
 
 namespace Microsoft.Scripting.Actions {
     using Ast = System.Linq.Expressions.Expression;
@@ -310,7 +311,7 @@ namespace Microsoft.Scripting.Actions {
                 Expression convFailed = GetTryConvertReturnValue(retType);
                 ParameterExpression tmp = Ast.Variable(convFailed.Type == typeof(object) ? typeof(object) : ret.Type, "tmp");
                 ret = Ast.Block(
-                        new ParameterExpression[] { tmp },
+                        new List<ParameterExpression>(new ParameterExpression[] { tmp }),
                         AstUtils.Try(
                             Ast.Assign(tmp, AstUtils.Convert(ret, tmp.Type))
                         ).Catch(
@@ -422,7 +423,7 @@ namespace Microsoft.Scripting.Actions {
                 ParameterExpression tmp = Ast.Variable(typeof(object), "tmp");
                 return new MetaObject(
                     Ast.Block(
-                        new ParameterExpression[] { tmp },
+                        new List<ParameterExpression>(new ParameterExpression[] { tmp }),
                         Ast.Condition(
                             Ast.NotEqual(
                                 Ast.Assign(tmp, conversion),

@@ -46,9 +46,9 @@ namespace Microsoft.Scripting.Runtime {
     }
 
     internal class GeneratorEnumerator<T> : IEnumerator<T> {
-        private readonly GeneratorNext<T> _next;
-        private T _current;
-        protected int _state;
+        internal readonly GeneratorNext<T> _next;
+        internal T _current;
+        internal int _state;
 
         internal GeneratorEnumerator(GeneratorNext<T> next) {
             _next = next;

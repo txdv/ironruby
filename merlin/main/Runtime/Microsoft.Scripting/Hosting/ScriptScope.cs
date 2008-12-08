@@ -256,7 +256,7 @@ namespace Microsoft.Scripting.Hosting {
 
                 return new MetaObject(
                     Expression.Block(
-                        new ParameterExpression[] { result },
+                        new List<ParameterExpression>(new ParameterExpression[] { result }),
                         Expression.Condition(
                             Expression.Call(
                                 AstUtils.Convert(Expression, typeof(ScriptScope)),
@@ -311,7 +311,7 @@ namespace Microsoft.Scripting.Hosting {
 
                 return new MetaObject(
                     Expression.Block(
-                        new ParameterExpression[] { result },
+                        new List<ParameterExpression>(new ParameterExpression[] { result }),
                         Expression.Condition(
                             Expression.Call(
                                 AstUtils.Convert(Expression, typeof(ScriptScope)),

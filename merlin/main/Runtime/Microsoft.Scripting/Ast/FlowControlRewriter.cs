@@ -245,7 +245,7 @@ namespace Microsoft.Scripting.Ast {
 
             // Emit flow control
             return Expression.Block(
-                new ParameterExpression[] { all },
+                new List<ParameterExpression>(new[] { all }),
                 Expression.MakeTry(@try, @finally, fault, handlers),
                 Expression.Label(block.FlowLabel),
                 MakeFlowControlSwitch(block)

@@ -476,7 +476,7 @@ namespace Microsoft.Scripting.Actions {
                     } else {
                         return new MetaObject(
                             Ast.Block(
-                                new ParameterExpression[] { arg2 },
+                                new List<ParameterExpression>(new ParameterExpression[] { arg2 }),
                                 target.MakeExpression(),
                                 arg2
                             ),

@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Dynamic.Utils;
+using System.Collections.Generic;
 
 namespace System.Linq.Expressions {
     //CONFORMING
@@ -129,7 +130,7 @@ namespace System.Linq.Expressions {
             // temp
             var temp = Parameter(_operand.Type, null);
             return Block(
-                new[] { temp },
+                new List<ParameterExpression>(new[] { temp }),
                 Assign(temp, _operand),
                 Assign(_operand, FunctionalOp(temp)),
                 temp
@@ -152,7 +153,7 @@ namespace System.Linq.Expressions {
                     // temp1 = value
                     // temp1.member = op(temp1.member)
                     return Block(
-                        new[] { temp1 },
+                        new List<ParameterExpression>(new[] { temp1 }),
                         initTemp1,
                         Assign(member, FunctionalOp(member))
                     );
@@ -166,7 +167,7 @@ namespace System.Linq.Expressions {
                 // temp2
                 var temp2 = Parameter(member.Type, null);
                 return Block(
-                    new[] { temp1, temp2 },
+                    new List<ParameterExpression>(new[] { temp1, temp2 }),
                     initTemp1,
                     Assign(temp2, member),
                     Assign(member, FunctionalOp(temp2)),
