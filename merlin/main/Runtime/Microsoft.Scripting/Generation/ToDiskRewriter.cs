@@ -53,7 +53,7 @@ namespace Microsoft.Scripting.Generation {
 
                 // Visit the lambda first, so we walk the tree and find any
                 // constants we need to rewrite.
-                node = (Expression<T>)base.VisitLambda(node);
+                node = (Expression<T>)base.VisitLambda<T>(node);
 
                 if (_depth != 1) {
                     return node;

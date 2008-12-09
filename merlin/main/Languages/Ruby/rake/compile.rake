@@ -35,7 +35,7 @@ task :compile_dlr => [:compile_extension_attributes] do
     compile :dlr_core, :references => ['!System.dll', '!System.Configuration.dll', 'Microsoft.Scripting.ExtensionAttribute.dll'], :switches => ['target:library', 'define:MICROSOFT_SCRIPTING_CORE'], :output => 'Microsoft.Scripting.Core.dll', :csproj => 'Microsoft.Scripting.Core.csproj'
     resources = { Pathname.new('Math') + 'MathResources.resx' => Pathname.new('Microsoft.Scripting.Math.MathResources.resources') }
     compile :dlr_libs, :references => ['Microsoft.Scripting.Core.dll', '!System.Xml.dll', '!System.dll', '!System.Configuration.dll', 'Microsoft.Scripting.ExtensionAttribute.dll','!System.Runtime.Remoting.dll'], :switches => ['target:library'], :resources => resources, :output => 'Microsoft.Scripting.dll'
-    compile :dlr_com, :references => ['Microsoft.Scripting.Core.dll', '!System.Xml.dll', '!System.dll', 'Microsoft.Scripting.ExtensionAttribute.dll'], :switches => ['target:library', 'unsafe'], :output => 'Microsoft.Dynamic.dll'
+    #compile :dlr_com, :references => ['Microsoft.Scripting.Core.dll', '!System.Xml.dll', '!System.dll', 'Microsoft.Scripting.ExtensionAttribute.dll'], :switches => ['target:library', 'unsafe'], :output => 'Microsoft.Dynamic.dll'
   end
 end
 
