@@ -68,7 +68,7 @@ bar
             // the library paths are incorrect (not combined with location of .exe file) in partial trust:
             if (_driver.PartialTrust) return;
 
-            bool result = Engine.RequireRubyFile("fcntl");
+            bool result = IronRuby.Ruby.RequireFile(Engine, "fcntl");
             Assert(result == true);
 
             var module = Runtime.Globals.GetVariable("Fcntl");
