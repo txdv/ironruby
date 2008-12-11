@@ -214,7 +214,9 @@ Configuration.define do
     group(:mono) {
       framework_path {
         libdir = IO.popen('pkg-config --variable=libdir mono').read.strip
-        [Pathname.new(libdir) + 'mono' + '2.0', Pathname.new('/usr/lib/mono/2.0/'), Pathname.new(ENV['MONO_LIB'] + '/mono/2.0/')]
+        path = [Pathname.new(libdir) + 'mono' + '2.0', Pathname.new('/usr/lib/mono/2.0/')]
+        path << Pathname.new(ENV['MONO_LIB'] + '/mono/2.0/') unless ENV['MONO_LIB'].nil? 
+        path
       }
       switches :all, 'noconfig'
       remove_switches ['warnaserror+']
