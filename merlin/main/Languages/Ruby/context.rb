@@ -238,7 +238,16 @@ module IronRubyUtils
   # Low-level command helpers
 
   def is_test?
-    ENV['test'] == 'true'
+    ENV['test']
+  end
+  
+  def mono?
+    ENV['mono']
+  end
+  
+  def rake_version
+    cmd = mono? ? "rake" : "rake.bat"
+    `#{cmd} --version`.chomp.gsub(/.*?(\d\.\d\.\d)/, '\1')
   end
 
   def exec(cmd)
