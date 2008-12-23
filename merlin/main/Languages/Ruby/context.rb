@@ -869,7 +869,9 @@ class UserEnvironment
   end
 
   def self.mri_binary
-    self.mri + '/bin/ruby.exe'
+    ruby_bin = self.mri + '/bin/ruby'
+    if File.exist?(ruby_bin) == false then ruby_bin = ruby_bin + ".exe" end
+    ruby_bin
   end
 
   def self.method_missing(sym, *args)
@@ -890,7 +892,7 @@ class UserEnvironment
     unless defined?(UserEnvironment::MRI)
       ruby_exe_paths = UserEnvironment.find_executable 'ruby'
       unless ruby_exe_paths.empty?
-        UserEnvironment.const_set(:MRI, Pathname.new(ruby_exe_paths.first + '\..\\'))
+        UserEnvironment.const_set(:MRI, Pathname.new(ruby_exe_paths.first + '/../'))
       else
         raise ArgumentError.new("Could not find ruby.exe on your path")
       end

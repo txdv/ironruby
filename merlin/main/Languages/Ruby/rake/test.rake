@@ -76,7 +76,7 @@ def invoke_mspec(path_to_ruby, root_path = "core")
     run_spec = root + "/1.8/#{root_path}/#{spec_suite}"
     reporter,tag  = extract_reporter(reporter)
 
-    chdir(get_source_dir(:tests) +'util'){
+    chdir(get_source_dir(:tests) +'Util'){
       cmd =  "\"#{UserEnvironment.mri_binary}\" \"#{UserEnvironment.mspec}/bin/mspec\" #{tag || 'ci'} -t #{path_to_ruby} -B \"#{UserEnvironment.config}\" \"#{run_spec}\" #{reporter}"
       exec_net cmd
     }
