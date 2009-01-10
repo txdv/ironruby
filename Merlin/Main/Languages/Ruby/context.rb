@@ -22,7 +22,9 @@ require 'tempfile'
 ENV['HOME'] ||= ENV['USERPROFILE']
 SVN_ROOT = Pathname.new 'c:/svn/trunk'
 EXCLUDED_EXTENSIONS   = %w[.old .suo .vspscc .vssscc .user .log .pdb .cache .swp]
-DEFAULT_ROBOCOPY_OPTIONS = "/XF *#{EXCLUDED_EXTENSIONS.join(' *')} /NP /COPY:DAT /A-:R "
+EXCLUDED_FILES = "dirs.proj makefile sources .gitignore"
+DEFAULT_ROBOCOPY_OPTIONS = "/XF *#{EXCLUDED_EXTENSIONS.join(' *')} #{EXCLUDED_FILES} /XD .git /NP /COPY:DAT /A-:R "
+
 
 class Pathname
   def filtered_subdirs(extras = [])
@@ -551,7 +553,7 @@ class ProjectContext
         options = get_compile_path_list(args[:csproj]).join("\n")
         temp.puts options
         temp.close
-
+        
         cmd << " @" << temp.path
         exec cmd
       end
@@ -625,7 +627,7 @@ class ProjectContext
         contents.change_configuration! 'Silverlight Release|AnyCPU', 'TRACE;SILVERLIGHT'
 
         unless block_given?
-          replace_key_path    contents, '..\..\RubyTestKey.snk', '..\..\..\MSSharedLibKey.snk'
+          replace_key_path    contents, '..\..\RubyTestKey.snk', '..\..\..\Support\MSSharedLibKey.snk'
         end
       end
       if block_given?
@@ -859,6 +861,7 @@ class UserEnvironment
     result = []
     search_path = ENV['PATH'].split(File::PATH_SEPARATOR)
     search_path.each do |dir|
+      next if dir.empty?
       path = Pathname.new(dir)
       file_path = path + executable
       result << file_path.dirname if file_path.file?

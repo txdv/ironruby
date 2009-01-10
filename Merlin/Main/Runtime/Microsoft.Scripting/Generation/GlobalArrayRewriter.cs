@@ -71,7 +71,6 @@ namespace Microsoft.Scripting.Generation {
             return base.VisitLambda<T>(node); 
         }
 
-
         protected override Expression MakeWrapper(GlobalVariableExpression variable) {
             Debug.Assert(!_names.IsReadOnly);
             int index = _names.Count;
