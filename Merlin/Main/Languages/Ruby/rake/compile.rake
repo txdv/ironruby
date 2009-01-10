@@ -64,7 +64,7 @@ desc "compile IronRuby console"
 task :compile_console => [:compile_libraries] do
   IronRuby.source_context do
     compile :console, :references => ['Microsoft.Scripting.Core.dll', 'Microsoft.Scripting.dll', 'IronRuby.dll'], :output => IRONRUBY_COMPILER
-    transform_config_file IronRuby.is_merlin? ? 'Merlin' : 'Svn', get_source_dir(:lang_root) + 'app.config', "#{build_path}\\ir.exe.config"
+    transform_config_file IronRuby.is_merlin? ? 'Merlin' : 'Svn', get_source_dir(:lang_root) + 'App.config', "#{build_path}\\ir.exe.config"
   end
 end
 
