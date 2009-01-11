@@ -22,6 +22,7 @@ using System.ComponentModel;
 using IronRuby.Builtins;
 using System.Diagnostics;
 using IronRuby.Runtime.Calls;
+using IronRuby;
 
 namespace IronRuby.Tests {
     public partial class Tests {

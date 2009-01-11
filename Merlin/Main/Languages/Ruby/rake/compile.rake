@@ -64,14 +64,14 @@ desc "compile IronRuby console"
 task :compile_console => [:compile_libraries] do
   IronRuby.source_context do
     compile :console, :references => ['Microsoft.Scripting.Core.dll', 'Microsoft.Scripting.dll', 'IronRuby.dll'], :output => IRONRUBY_COMPILER
-    transform_config_file IronRuby.is_merlin? ? 'Merlin' : 'Svn', get_source_dir(:lang_root) + 'App.config', "#{build_path}\\ir.exe.config"
+    transform_config_file IronRuby.is_merlin? ? 'Merlin' : 'Svn', get_source_dir(:lang_root) + 'App.config', "#{build_path}/ir.exe.config"
   end
 end
 
 desc "compile IronRuby.Tests"
 task :compile_testhost => [:compile_libraries] do
   IronRuby.source_context do
-    compile :test_runner, :references => ['Microsoft.Scripting.Core.dll', 'Microsoft.Scripting.dll', 'IronRuby.dll', 'IronRuby.Libraries.dll', '!System.dll', '!System.Windows.Forms.dll'], :output => 'IronRuby.Tests.exe'
+#    compile :test_runner, :references => ['Microsoft.Scripting.Core.dll', 'Microsoft.Scripting.dll', 'IronRuby.dll', 'IronRuby.Libraries.dll', '!System.dll', '!System.Windows.Forms.dll'], :output => 'IronRuby.Tests.exe'
   end
 end
 
