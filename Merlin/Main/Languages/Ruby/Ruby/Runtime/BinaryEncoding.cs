@@ -30,7 +30,8 @@ namespace IronRuby.Runtime {
         // TODO: remove
         public static readonly Encoding/*!*/ Obsolete = Instance;
 
-        private BinaryEncoding() {
+        private BinaryEncoding():base(0) {
+	
         }
 
         public override int GetByteCount(char[]/*!*/ chars, int index, int count) {
