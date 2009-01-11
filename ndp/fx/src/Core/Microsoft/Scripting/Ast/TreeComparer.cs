@@ -84,7 +84,7 @@ namespace System.Linq.Expressions {
 
             protected internal override Expression VisitLambda<T>(Expression<T> node) {
                 Expressions.Add(node);
-                return base.VisitLambda(node);
+                return base.VisitLambda<T>(node);
             }
 
             protected internal override Expression VisitLoop(LoopExpression node) {

@@ -157,7 +157,7 @@ namespace System.Linq.Expressions {
         /// </summary>
         /// <returns>A delegate containing the compiled version of the lambda.</returns>
         public new TDelegate Compile() {
-            return LambdaCompiler.CompileLambda(this, false);
+            return LambdaCompiler.CompileLambda<TDelegate>(this, false);
         }
 
         /// <summary>
@@ -166,15 +166,15 @@ namespace System.Linq.Expressions {
         /// <param name="emitDebugSymbols">A paramter that indicates if debugging information should be emitted.</param>
         /// <returns>A delegate containing the compiled version of the lambda.</returns>
         public new TDelegate Compile(bool emitDebugSymbols) {
-            return LambdaCompiler.CompileLambda(this, emitDebugSymbols);
+            return LambdaCompiler.CompileLambda<TDelegate>(this, emitDebugSymbols);
         }
 
         internal override Expression Accept(ExpressionVisitor visitor) {
-            return visitor.VisitLambda(this);
+            return visitor.VisitLambda<TDelegate>(this);
         }
 
         internal override LambdaExpression Accept(StackSpiller spiller) {
-            return spiller.Rewrite(this);
+            return spiller.Rewrite<TDelegate>(this);
         }
     }
 
