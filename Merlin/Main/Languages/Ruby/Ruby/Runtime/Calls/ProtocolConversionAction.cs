@@ -282,6 +282,7 @@ namespace IronRuby.Runtime.Calls {
             }
             return false;
         }
+	  public ConvertToReferenceTypeAction() { }
     }
 
     public sealed class ConvertToProcAction : ConvertToReferenceTypeAction<ConvertToProcAction, Proc> {
@@ -349,6 +350,7 @@ namespace IronRuby.Runtime.Calls {
 
             return false;
         }
+	public ConvertToFixnumAction() {}
     }
 
     public abstract class ConvertToIntegerActionBase<TSelf> : ProtocolConversionAction<TSelf>
@@ -386,6 +388,7 @@ namespace IronRuby.Runtime.Calls {
     public sealed class ConvertToIntAction : ConvertToIntegerActionBase<ConvertToIntAction> {
         protected override string/*!*/ ToMethodName { get { return Symbols.ToInt; } }
         protected override MethodInfo ConversionResultValidator { get { return Methods.ToIntegerValidator; } }
+	public ConvertToIntAction() {}
     }
 
     /// <summary>
@@ -394,6 +397,7 @@ namespace IronRuby.Runtime.Calls {
     public sealed class ConvertToIAction : ConvertToIntegerActionBase<ConvertToIAction> {
         protected override string/*!*/ ToMethodName { get { return Symbols.ToI; } }
         protected override MethodInfo ConversionResultValidator { get { return Methods.ToIntegerValidator; } }
+	public ConvertToIAction() {}
     }
     
     public sealed class ConvertToSymbolAction : ProtocolConversionAction<ConvertToSymbolAction> {
@@ -401,6 +405,8 @@ namespace IronRuby.Runtime.Calls {
         protected override string/*!*/ TargetTypeName { get { return "Symbol"; } }
         protected override MethodInfo ConversionResultValidator { get { return Methods.ToSymbolValidator; } }
 
+	public ConvertToSymbolAction() {}
+	
         protected override bool TryImplicitConversion(MetaObjectBuilder/*!*/ metaBuilder, CallArguments/*!*/ args) {
             object target = args.Target;
             var targetExpression = args.TargetExpression;
