@@ -98,7 +98,7 @@ namespace Microsoft.Scripting {
                     // rewrite the lambda with the correct type
                     lambda = Expression.Lambda<DlrMainCallTarget>(code.Body, code.Name, code.Parameters);
                 }
-                Interlocked.CompareExchange(ref _target, lambda.Compile(SourceUnit.EmitDebugSymbols), null);
+                Interlocked.CompareExchange(ref _target, lambda.Compile<DlrMainCallTarget>(SourceUnit.EmitDebugSymbols), null);
             }
             return _target;
         }

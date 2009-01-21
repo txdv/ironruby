@@ -73,7 +73,7 @@ namespace Microsoft.Scripting.Runtime {
                 // of GlobalVariables and then this can go away.
                 Expression<DlrMainCallTarget> lambda = new GlobalLookupRewriter().RewriteLambda(code);
 
-                _unoptimizedTarget = lambda.Compile(SourceUnit.EmitDebugSymbols);
+                _unoptimizedTarget = lambda.Compile<DlrMainCallTarget>(SourceUnit.EmitDebugSymbols);
             }
 
 
@@ -130,7 +130,7 @@ namespace Microsoft.Scripting.Runtime {
             Expression<DlrMainCallTarget> lambda = rewriter.RewriteLambda(Code);
 
             // Compile target
-            target = lambda.Compile(SourceUnit.EmitDebugSymbols);
+            target = lambda.Compile<DlrMainCallTarget>(SourceUnit.EmitDebugSymbols);
 
             // Create globals
             globals = rewriter.CreateDictionary();
