@@ -251,6 +251,7 @@ namespace IronRuby.Runtime.Calls {
     public abstract class ProtocolConversionAction<TSelf> : ProtocolConversionAction, IEquatable<TSelf>, IExpressionSerializable
         where TSelf : ProtocolConversionAction<TSelf>, new() {
         
+	    
         public static readonly TSelf Instance = new TSelf();
 
         public bool Equals(TSelf other) {
@@ -262,7 +263,7 @@ namespace IronRuby.Runtime.Calls {
             return Instance;
         }
 
-        protected ProtocolConversionAction() {
+        public ProtocolConversionAction() {
             Debug.Assert(GetType() == typeof(TSelf));
         }
 

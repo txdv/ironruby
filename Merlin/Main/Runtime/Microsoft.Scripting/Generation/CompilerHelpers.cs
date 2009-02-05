@@ -703,11 +703,11 @@ namespace Microsoft.Scripting.Generation {
         /// <typeparam name="T">The lambda's delegate type.</typeparam>
         /// <param name="lambda">The lambda to compile.</param>
         /// <returns>A delegate which can interpret the lambda.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+      /* [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static T LightCompile<T>(this Expression<T> lambda) {
             return (T)(object)LightCompile((LambdaExpression)lambda);
         }
-
+      */
         /// <summary>
         /// Compiles the LambdaExpression.
         /// 
