@@ -8,3 +8,4 @@ Merlin/Main/External
 *.vssscc
 obj
 *.suo
+bin

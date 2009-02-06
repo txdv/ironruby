@@ -68,7 +68,7 @@ namespace Microsoft.Scripting.Generation {
                 );
             }
 
-            return base.VisitLambda(node);
+            return base.VisitLambda<T>(node);
         }
 
         protected override Expression MakeWrapper(GlobalVariableExpression variable) {

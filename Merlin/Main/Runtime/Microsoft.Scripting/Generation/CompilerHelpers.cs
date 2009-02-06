@@ -707,7 +707,7 @@ namespace Microsoft.Scripting.Generation {
         /// <returns>A delegate which can interpret the lambda.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static T LightCompile<T>(this Expression<T> lambda) {
-            return (T)(object)LightCompile((LambdaExpression)lambda);
+            return (T)(object)new LightLambda(new LightCompiler().CompileTop(lambda)).MakeDelegate(lambda.Type);
         }
 
         /// <summary>
@@ -724,7 +724,7 @@ namespace Microsoft.Scripting.Generation {
         /// <param name="emitDebugSymbols">true to generate a debuggable method, false otherwise</param>
         /// <returns>the compiled delegate</returns>
         public static T Compile<T>(this Expression<T> lambda, bool emitDebugSymbols) {
-            return emitDebugSymbols ? CompileToMethod(lambda, true) : lambda.Compile();
+            return emitDebugSymbols ? CompileToMethod<T>(lambda, true) : lambda.Compile();
         }
 
         /// <summary>

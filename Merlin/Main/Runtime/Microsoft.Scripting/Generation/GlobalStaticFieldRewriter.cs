@@ -60,7 +60,7 @@ namespace Microsoft.Scripting.Generation {
                 );
                 Context = Expression.Field(null, _contextField);
             }
-            return base.VisitLambda(node);
+            return base.VisitLambda<T>(node);
         }
 
         protected override Expression MakeWrapper(GlobalVariableExpression variable) {

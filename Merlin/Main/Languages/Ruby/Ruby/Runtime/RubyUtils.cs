@@ -711,7 +711,7 @@ namespace IronRuby.Runtime {
                     targetScope.RuntimeFlowControl
                 );
             } else {
-                return lambda.Compile(source.EmitDebugSymbols)(
+                return lambda.Compile<EvalEntryPointDelegate>(source.EmitDebugSymbols)(
                     targetScope,
                     self,
                     module,

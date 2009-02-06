@@ -153,11 +153,11 @@ namespace System.Linq.Expressions {
         }
 
         internal override Expression Accept(ExpressionVisitor visitor) {
-            return visitor.VisitLambda(this);
+            return visitor.VisitLambda<TDelegate>(this);
         }
 
         internal override LambdaExpression Accept(StackSpiller spiller) {
-            return spiller.Rewrite(this);
+            return spiller.Rewrite<TDelegate>(this);
         }
     }
 

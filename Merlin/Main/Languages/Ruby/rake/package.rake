@@ -13,7 +13,7 @@
 #
 # ****************************************************************************
 
-PACKAGE_DIR           = 'c:\ironruby'  # directory that binary package is created in
+PACKAGE_DIR           = '~/src/ironruby/distrib'  # directory that binary package is created in
 
 desc "Generate an IronRuby binary redist package from the layout"
 task :package do
