@@ -336,8 +336,7 @@ namespace IronRuby.Runtime.Calls {
     }
 
     public sealed class ConvertToFixnumAction : ProtocolConversionAction<ConvertToFixnumAction> {
-        public ConvertToFixnumAction(){}
-		protected override string/*!*/ ToMethodName { get { return Symbols.ToInt; } }
+       		protected override string/*!*/ ToMethodName { get { return Symbols.ToInt; } }
         protected override string/*!*/ TargetTypeName { get { return "Fixnum"; } }
         protected override MethodInfo ConversionResultValidator { get { return Methods.ToFixnumValidator; } }
 
@@ -399,7 +398,7 @@ namespace IronRuby.Runtime.Calls {
     /// Calls to_int and wraps the result (Fixnum or Bignum) into IntegerValue.
     /// </summary>
     public sealed class ConvertToIntAction : ConvertToIntegerActionBase<ConvertToIntAction> {
-		public ConvertToIntAction(){}
+	
         protected override string/*!*/ ToMethodName { get { return Symbols.ToInt; } }
         protected override MethodInfo ConversionResultValidator { get { return Methods.ToIntegerValidator; } }
 	public ConvertToIntAction() {}
@@ -412,7 +411,7 @@ namespace IronRuby.Runtime.Calls {
         public ConvertToIAction(){}
 		protected override string/*!*/ ToMethodName { get { return Symbols.ToI; } }
         protected override MethodInfo ConversionResultValidator { get { return Methods.ToIntegerValidator; } }
-	public ConvertToIAction() {}
+	
     }
 
     /// <summary>
@@ -461,8 +460,6 @@ namespace IronRuby.Runtime.Calls {
 		protected override string/*!*/ ToMethodName { get { return Symbols.ToStr; } }
         protected override string/*!*/ TargetTypeName { get { return "Symbol"; } }
         protected override MethodInfo ConversionResultValidator { get { return Methods.ToSymbolValidator; } }
-
-	public ConvertToSymbolAction() {}
 	
         protected override bool TryImplicitConversion(MetaObjectBuilder/*!*/ metaBuilder, CallArguments/*!*/ args) {
             object target = args.Target;
