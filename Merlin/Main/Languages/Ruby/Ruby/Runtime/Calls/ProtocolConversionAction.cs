@@ -292,13 +292,15 @@ namespace IronRuby.Runtime.Calls {
     }
 
     public sealed class ConvertToProcAction : ConvertToReferenceTypeAction<ConvertToProcAction, Proc> {
+		public ConvertToProcAction(){}
         protected override string/*!*/ ToMethodName { get { return Symbols.ToProc; } }
         protected override string/*!*/ TargetTypeName { get { return "Proc"; } }
         protected override MethodInfo ConversionResultValidator { get { return Methods.ToProcValidator; } }
     }
 
     public sealed class ConvertToStrAction : ConvertToReferenceTypeAction<ConvertToStrAction, MutableString> {
-        protected override string/*!*/ ToMethodName { get { return Symbols.ToStr; } }
+        public ConvertToStrAction(){}
+		protected override string/*!*/ ToMethodName { get { return Symbols.ToStr; } }
         protected override string/*!*/ TargetTypeName { get { return "String"; } }
         protected override MethodInfo ConversionResultValidator { get { return Methods.ToStringValidator; } }
     }
@@ -306,31 +308,36 @@ namespace IronRuby.Runtime.Calls {
     // TODO: escaping vs. non-escaping?
     // This conversion escapes the regex. 
     public sealed class ConvertToRegexAction : ConvertToReferenceTypeAction<ConvertToRegexAction, RubyRegex> {
-        protected override string/*!*/ ToMethodName { get { return Symbols.ToStr; } }
+        public ConvertToRegexAction(){}
+		protected override string/*!*/ ToMethodName { get { return Symbols.ToStr; } }
         protected override string/*!*/ TargetTypeName { get { return "Regexp"; } }
         protected override MethodInfo ConversionResultValidator { get { return Methods.ToRegexValidator; } }
     }
 
     public sealed class ConvertToArrayAction : ConvertToReferenceTypeAction<ConvertToArrayAction, IList> {
-        protected override string/*!*/ ToMethodName { get { return Symbols.ToAry; } }
+        public ConvertToArrayAction(){}
+		protected override string/*!*/ ToMethodName { get { return Symbols.ToAry; } }
         protected override string/*!*/ TargetTypeName { get { return "Array"; } }
         protected override MethodInfo ConversionResultValidator { get { return Methods.ToArrayValidator; } }
     }
 
     public sealed class ConvertToHashAction : ConvertToReferenceTypeAction<ConvertToHashAction, IDictionary<object, object>> {
-        protected override string/*!*/ ToMethodName { get { return Symbols.ToHash; } }
+        public ConvertToHashAction(){}
+		protected override string/*!*/ ToMethodName { get { return Symbols.ToHash; } }
         protected override string/*!*/ TargetTypeName { get { return "Hash"; } }
         protected override MethodInfo ConversionResultValidator { get { return Methods.ToHashValidator; } }
     }
 
     public sealed class TryConvertToArrayAction : ConvertToReferenceTypeAction<TryConvertToArrayAction, IList> {
-        protected override string/*!*/ ToMethodName { get { return Symbols.ToAry; } }
+        public TryConvertToArrayAction(){}
+		protected override string/*!*/ ToMethodName { get { return Symbols.ToAry; } }
         protected override string/*!*/ TargetTypeName { get { return "Array"; } }
         protected override MethodInfo ConversionResultValidator { get { return null; } }
     }
 
     public sealed class ConvertToFixnumAction : ProtocolConversionAction<ConvertToFixnumAction> {
-        protected override string/*!*/ ToMethodName { get { return Symbols.ToInt; } }
+        public ConvertToFixnumAction(){}
+		protected override string/*!*/ ToMethodName { get { return Symbols.ToInt; } }
         protected override string/*!*/ TargetTypeName { get { return "Fixnum"; } }
         protected override MethodInfo ConversionResultValidator { get { return Methods.ToFixnumValidator; } }
 
@@ -392,6 +399,7 @@ namespace IronRuby.Runtime.Calls {
     /// Calls to_int and wraps the result (Fixnum or Bignum) into IntegerValue.
     /// </summary>
     public sealed class ConvertToIntAction : ConvertToIntegerActionBase<ConvertToIntAction> {
+		public ConvertToIntAction(){}
         protected override string/*!*/ ToMethodName { get { return Symbols.ToInt; } }
         protected override MethodInfo ConversionResultValidator { get { return Methods.ToIntegerValidator; } }
 	public ConvertToIntAction() {}
@@ -401,7 +409,8 @@ namespace IronRuby.Runtime.Calls {
     /// Calls to_i and wraps the result (Fixnum or Bignum) into IntegerValue.
     /// </summary>
     public sealed class ConvertToIAction : ConvertToIntegerActionBase<ConvertToIAction> {
-        protected override string/*!*/ ToMethodName { get { return Symbols.ToI; } }
+        public ConvertToIAction(){}
+		protected override string/*!*/ ToMethodName { get { return Symbols.ToI; } }
         protected override MethodInfo ConversionResultValidator { get { return Methods.ToIntegerValidator; } }
 	public ConvertToIAction() {}
     }
@@ -410,7 +419,8 @@ namespace IronRuby.Runtime.Calls {
     /// Calls to_f (in most cases) and wraps the result into double. It directly calls Kernel.Float for String, Fixnum and Bignum.
     /// </summary>
     public sealed class ConvertToFAction : ProtocolConversionAction<ConvertToFAction> {
-        protected override string/*!*/ TargetTypeName { get { return "Float"; } }
+        public ConvertToFAction(){}
+		protected override string/*!*/ TargetTypeName { get { return "Float"; } }
         protected override string/*!*/ ToMethodName { get { return Symbols.ToF; } }
         protected override MethodInfo ConversionResultValidator { get { return Methods.ToFloatValidator; } }
 
@@ -447,7 +457,8 @@ namespace IronRuby.Runtime.Calls {
     }
 
     public sealed class ConvertToSymbolAction : ProtocolConversionAction<ConvertToSymbolAction> {
-        protected override string/*!*/ ToMethodName { get { return Symbols.ToStr; } }
+        public ConvertToSymbolAction(){}
+		protected override string/*!*/ ToMethodName { get { return Symbols.ToStr; } }
         protected override string/*!*/ TargetTypeName { get { return "Symbol"; } }
         protected override MethodInfo ConversionResultValidator { get { return Methods.ToSymbolValidator; } }
 

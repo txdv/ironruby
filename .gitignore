@@ -8,3 +8,5 @@ makefile
 sources
 *.proj
 *.suo
+bin
+dist

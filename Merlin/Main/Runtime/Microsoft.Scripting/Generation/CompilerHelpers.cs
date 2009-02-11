@@ -672,7 +672,7 @@ namespace Microsoft.Scripting.Generation {
         /// <returns>A delegate which can interpret the lambda.</returns>
       /* [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static T LightCompile<T>(this Expression<T> lambda) {
-            return (T)(object)LightCompile((LambdaExpression)lambda);
+            return (T)(object)new LightLambda(new LightCompiler().CompileTop(lambda)).MakeDelegate(lambda.Type);
         }
       */
         /// <summary>
