@@ -28,7 +28,7 @@ namespace System.Dynamic {
     /// If a method is not overridden then the DynamicObject does not directly support that behavior and 
     /// the call site will determine how the binding should be performed.
     /// </summary>
-    public class DynamicObject : IDynamicObject {
+    public class DynamicObject : IDynamicMetaObjectProvider {
 
         /// <summary>
         /// Enables derived types to create a new instance of DynamicObject.  DynamicObject instances cannot be
@@ -585,7 +585,7 @@ namespace System.Dynamic {
 
         #endregion
 
-        #region IDynamicObject Members
+        #region IDynamicMetaObjectProvider Members
 
         /// <summary>
         /// The provided MetaObject will dispatch to the Dynamic virtual methods.

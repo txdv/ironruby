@@ -20,8 +20,8 @@ BUILD_BIN             = "#{MERLIN_ROOT}/bin/#{'mono_' if mono?}debug"
 desc "Generate an IronRuby binary redist package from the layout"
 task :package do
   # Directory layouts
-  FileUtils.remove_dir(PACKAGE_DIR, true) if File.exist? PACKAGE_DIR
-  FileUtils.mkdir_p "#{PACKAGE_DIR}/bin"
+  system %Q{rmdir /S /Q #{PACKAGE_DIR}}
+  FileUtils.mkdir_p "#{PACKAGE_DIR}\\bin"
   
   # Copy Licenses
   FileUtils.cp Dir.glob("#{MERLIN_ROOT}/Languages/Ruby/Licenses/*"), PACKAGE_DIR
