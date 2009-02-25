@@ -297,7 +297,7 @@ class CSProjCompiler
     result = Pathname.new '.'
     elements.each do |element|
       entry = result.entries.find { |p| p.downcase == element.downcase }
-      result = result + entry
+      result = result + entry unless entry.nil?
     end
     result.to_s
   end
@@ -415,24 +415,29 @@ IronRubyCompiler = CSProjCompiler.new do
   ironruby :references => ['Microsoft.Scripting.Core.dll', 'Microsoft.Scripting.dll', 'Microsoft.Scripting.ExtensionAttribute.dll','!System.dll', '!System.Configuration.dll'],
            :switches   => ['target:library'],
            :output     => 'IronRuby.dll',
-           :dir        => './Ruby'
+           :dir        => './Ruby',
+           :csproj     => 'Ruby.Build.csproj'
   libraries :references => ['Microsoft.Scripting.Core.dll', 'Microsoft.Scripting.dll', 'Microsoft.Scripting.ExtensionAttribute.dll', 'IronRuby.dll', '!System.dll'],
             :switches   => ['target:library'],
             :output     => 'IronRuby.Libraries.dll',
-            :dir        => 'Libraries.LCA_RESTRICTED'
+            :dir        => 'Libraries.LCA_RESTRICTED',
+            :csproj     => 'IronRuby.Libraries.Build.csproj'
   console :references => ['Microsoft.Scripting.Core.dll','Microsoft.Scripting.dll','IronRuby.dll'],
           :output     => 'ir.exe',
-          :dir        => './Console'
+          :dir        => './Console',
+          :csproj     => 'Ruby.Console.csproj'
   test_runner :references => ['Microsoft.Scripting.Core.dll', 'Microsoft.Scripting.dll', 'IronRuby.dll', 'IronRuby.Libraries.dll', '!System.dll', '!System.Windows.Forms.dll'],
               :output     => 'IronRuby.Tests.exe',
-              :dir        => './IronRuby.Tests'
+              :dir        => './IronRuby.Tests',
+              :csproj     => 'IronRuby.Tests.csproj'
   scanner :references => ['Microsoft.Scripting.Core.dll', 'Microsoft.Scripting.dll', 'IronRuby.dll', 'IronRuby.Libraries.dll', '!System.Core.dll'],
           :output     => 'IronRuby.Libraries.Scanner.exe',
           :dir        => './IronRuby.Libraries.Scanner'
   yaml :references => ['Microsoft.Scripting.Core.dll', 'Microsoft.Scripting.dll', 'IronRuby.dll', 'IronRuby.Libraries.dll', '!System.dll'],
        :switches   => ['target:library'],
        :output     => 'IronRuby.Libraries.Yaml.dll',
-       :dir        => '../../../External/Languages/IronRuby/Yaml/IronRuby.Libraries.Yaml'
+       :dir        => '../../../External/Languages/IronRuby/Yaml/IronRuby.Libraries.Yaml',
+       :csproj     => 'IronRuby.Libraries.Yaml.csproj'
 end
 
 # Spec runner helpers
