@@ -14,6 +14,7 @@
  * ***************************************************************************/
 
 using System.Diagnostics;
+using System.Dynamic.Utils;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Dynamic.Utils;
@@ -409,6 +410,18 @@ namespace System.Dynamic {
                 callArgs[callArgs.Length - 1] = result;
 
                 var resultMO = new DynamicMetaObject(result, BindingRestrictions.Empty);
+
+                // Need to add a conversion if calling TryConvert
+                if (binder.ReturnType != typeof(object)) {
+                    Debug.Assert(binder is ConvertBinder && fallbackInvoke == null);
+
+                    var convert = Expression.Convert(resultMO.Expression, binder.ReturnType);
+                    // will always be a cast or unbox
+                    Debug.Assert(convert.Method == null);
+
+                    resultMO = new DynamicMetaObject(convert, resultMO.Restrictions);
+                }
+
                 if (fallbackInvoke != null) {
                     resultMO = fallbackInvoke(resultMO);
                 }
@@ -423,7 +436,8 @@ namespace System.Dynamic {
                                 callArgs
                             ),
                             resultMO.Expression,
-                            DynamicMetaObjectBinder.Convert(fallbackResult.Expression, typeof(object))
+                            fallbackResult.Expression,
+                            binder.ReturnType
                         )
                     ),
                     GetRestrictions().Merge(resultMO.Restrictions).Merge(fallbackResult.Restrictions)
@@ -475,7 +489,8 @@ namespace System.Dynamic {
                                 callArgs
                             ),
                             result,
-                            DynamicMetaObjectBinder.Convert(fallbackResult.Expression, typeof(object))
+                            fallbackResult.Expression,
+                            typeof(object)
                         )
                     ),
                     GetRestrictions().Merge(fallbackResult.Restrictions)
@@ -507,7 +522,7 @@ namespace System.Dynamic {
 
                 //
                 // Build a new expression like:
-                //   TryDeleteMember(payload) ? null : fallbackResult
+                //   if (TryDeleteMember(payload)) { } else { fallbackResult }
                 //
                 var callDynamic = new DynamicMetaObject(
                     Expression.Condition(
@@ -516,8 +531,9 @@ namespace System.Dynamic {
                             typeof(DynamicObject).GetMethod(methodName),
                             args.AddFirst(Constant(binder))
                         ),
-                        Expression.Constant(null),
-                        DynamicMetaObjectBinder.Convert(fallbackResult.Expression, typeof(object))
+                        Expression.Empty(),
+                        fallbackResult.Expression,
+                        typeof(void)
                     ),
                     GetRestrictions().Merge(fallbackResult.Restrictions)
                 );
@@ -564,7 +580,7 @@ namespace System.Dynamic {
             /// Returns our Expression converted to our known LimitType
             /// </summary>
             private Expression GetLimitedSelf() {
-                if (Expression.Type == LimitType) {
+                if (TypeUtils.AreEquivalent(Expression.Type, LimitType)) {
                     return Expression;
                 }
                 return Expression.Convert(Expression, LimitType);
