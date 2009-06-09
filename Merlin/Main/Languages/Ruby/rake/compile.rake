@@ -28,7 +28,7 @@ desc "compile DLR (Microsoft.Scripting.dll and Microsoft.Scripting.Core.dll)"
 task :compile_dlr => [:compile_extension_attributes] do
   IronRubyCompiler.compile :dlr_core
   IronRubyCompiler.compile :dlr_libs
-  IronRubyCompiler.compile :dlr_com unless IronRubyCompiler.mono?
+  IronRubyCompiler.compile :dlr_com #unless IronRubyCompiler.mono?
 end
 
 desc "compile ClassInitGenerator.exe"
