@@ -14,42 +14,30 @@ Topics covered
   - Using Blend for UI design
   - Creating WPF FlowDocument from RDoc SimpleMarkup text
 - Creating domain-specific-languages (DSLs) in Ruby
-- Using the Test::Unit testing framework
+- Using the test-spec gem for testing
 - Creating an application that can be developed incrementally from an
   interactive session with ability to reload modified source files.
 
 Running the app
 ---------------
 
-  ir.exe wpf_tutorial.rb
+    ir.exe wpf_tutorial.rb
+  
+    ir.exe wpf_tutorial.rb <tutorial_file_path>
 
 Running the app interactively
 -----------------------------
 
-  ir.exe
-  >>> load "wpf_tutorial.rb"
-  => true
-  >>> # Edit wpf_tutorial.rb. For example, change the settings on the window in
-  >>> # the XAML
-  >>> reload # This should show the new window now...
-  => true
+Launch ir.exe:
 
+    load "wpf_tutorial.rb"
+    #=> true
+    # Edit wpf_tutorial.rb. For example, change the settings on the window in
+    # the XAML
+    reload # This should show the new window now...
+    #=> true
 
 Running the tests
 -----------------
 
-  ir.exe test\test_console.rb
-
-TODO
-----
-
-- Start tutorial button
-- scratch REPL surface
-- Collapsable tutorial section/chapter navigation
-- UI to show all available tutorials
-- Ruby syntax colorization
-- Integration with RubyGems to download tutorial gems
-- Multi-step tasks with hinting for next step
-- UI surface for WPF tutorials
-- Silverlight support
-- Voting feedback
+    ir.exe test\test_console.rb
