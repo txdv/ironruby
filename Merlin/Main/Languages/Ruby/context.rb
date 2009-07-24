@@ -417,7 +417,7 @@ IronRubyCompiler = CSProjCompiler.new do
           :csproj       => 'Microsoft.Dynamic.csproj',
           :dir          => '../../../../ndp/fx/src/Dynamic/System/Dynamic'
 
-  dlr_debug :references => ['Microsoft.Scripting.Core.dll', 'Microsoft.Scripting.dll','Microsoft.Scripting.ExtensionAttribute.dll'],
+  dlr_debug :references => ['!System.dll', 'Microsoft.Scripting.Core.dll', 'Microsoft.Scripting.dll','Microsoft.Scripting.ExtensionAttribute.dll'],
             :switches   => ['target:library'],
             :output     => 'Microsoft.Scripting.Debugging.dll',
             :csproj     => 'Microsoft.Scripting.Debugging.csproj',

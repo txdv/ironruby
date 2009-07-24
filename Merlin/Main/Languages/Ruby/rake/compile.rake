@@ -80,4 +80,4 @@ namespace :compile do
 end
 
 desc "compile everything"
-task :compile => %w{happy clean_build compile:dlr compile:ruby compile:libraries compile:console compile:generator compile:yaml compile:testhost }
+task :compile => %w{happy clean_build compile:dlr compile:ruby compile:libraries compile:console compile:generator compile:yaml } # compile:testhost }
