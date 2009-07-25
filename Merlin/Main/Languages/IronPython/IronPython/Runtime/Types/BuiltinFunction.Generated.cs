@@ -154,7 +154,7 @@ namespace IronPython.Runtime.Types {
             }
 
             public object Call0(CallSite site, CodeContext context, TFuncType func) {
-                if (func == _func && !_info.ShouldOptimize) {
+                if (((BuiltinFunction)(object)func) == _func && !_info.ShouldOptimize) {
                     return _info.Caller.Invoke(new object[] { context }, out _info.ShouldOptimize);
                 }
 
@@ -211,7 +211,7 @@ namespace IronPython.Runtime.Types {
             }
 
             public object Call1(CallSite site, CodeContext context, TFuncType func, T0 arg0) {
-                if (func == _func &&
+                if (((BuiltinFunction)(object)func) == _func &&
                     !_info.ShouldOptimize && 
                     (_type0 == null || CompilerHelpers.GetType(arg0) == _type0)
                    ) {
@@ -270,7 +270,7 @@ namespace IronPython.Runtime.Types {
             }
 
             public object Call2(CallSite site, CodeContext context, TFuncType func, T0 arg0, T1 arg1) {
-                if (func == _func &&
+                if (((BuiltinFunction)(object)func) == _func &&
                     !_info.ShouldOptimize && 
                     (_type0 == null || CompilerHelpers.GetType(arg0) == _type0) &&
                     (_type1 == null || CompilerHelpers.GetType(arg1) == _type1)
@@ -333,7 +333,7 @@ namespace IronPython.Runtime.Types {
             }
 
             public object Call3(CallSite site, CodeContext context, TFuncType func, T0 arg0, T1 arg1, T2 arg2) {
-                if (func == _func &&
+                if (((BuiltinFunction)(object)func) == _func &&
                     !_info.ShouldOptimize && 
                     (_type0 == null || CompilerHelpers.GetType(arg0) == _type0) &&
                     (_type1 == null || CompilerHelpers.GetType(arg1) == _type1) &&
@@ -400,7 +400,7 @@ namespace IronPython.Runtime.Types {
             }
 
             public object Call4(CallSite site, CodeContext context, TFuncType func, T0 arg0, T1 arg1, T2 arg2, T3 arg3) {
-                if (func == _func &&
+                if (((BuiltinFunction)(object)func) == _func &&
                     !_info.ShouldOptimize && 
                     (_type0 == null || CompilerHelpers.GetType(arg0) == _type0) &&
                     (_type1 == null || CompilerHelpers.GetType(arg1) == _type1) &&
@@ -471,7 +471,7 @@ namespace IronPython.Runtime.Types {
             }
 
             public object Call5(CallSite site, CodeContext context, TFuncType func, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4) {
-                if (func == _func &&
+                if (((BuiltinFunction)(object)func) == _func &&
                     !_info.ShouldOptimize && 
                     (_type0 == null || CompilerHelpers.GetType(arg0) == _type0) &&
                     (_type1 == null || CompilerHelpers.GetType(arg1) == _type1) &&
@@ -546,7 +546,7 @@ namespace IronPython.Runtime.Types {
             }
 
             public object Call6(CallSite site, CodeContext context, TFuncType func, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5) {
-                if (func == _func &&
+                if (((BuiltinFunction)(object)func) == _func &&
                     !_info.ShouldOptimize && 
                     (_type0 == null || CompilerHelpers.GetType(arg0) == _type0) &&
                     (_type1 == null || CompilerHelpers.GetType(arg1) == _type1) &&
@@ -625,7 +625,7 @@ namespace IronPython.Runtime.Types {
             }
 
             public object Call7(CallSite site, CodeContext context, TFuncType func, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6) {
-                if (func == _func &&
+                if (((BuiltinFunction)(object)func) == _func &&
                     !_info.ShouldOptimize && 
                     (_type0 == null || CompilerHelpers.GetType(arg0) == _type0) &&
                     (_type1 == null || CompilerHelpers.GetType(arg1) == _type1) &&
@@ -708,7 +708,7 @@ namespace IronPython.Runtime.Types {
             }
 
             public object Call8(CallSite site, CodeContext context, TFuncType func, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7) {
-                if (func == _func &&
+                if (((BuiltinFunction)(object)func) == _func &&
                     !_info.ShouldOptimize && 
                     (_type0 == null || CompilerHelpers.GetType(arg0) == _type0) &&
                     (_type1 == null || CompilerHelpers.GetType(arg1) == _type1) &&
@@ -795,7 +795,7 @@ namespace IronPython.Runtime.Types {
             }
 
             public object Call9(CallSite site, CodeContext context, TFuncType func, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8) {
-                if (func == _func &&
+                if (((BuiltinFunction)(object)func) == _func &&
                     !_info.ShouldOptimize && 
                     (_type0 == null || CompilerHelpers.GetType(arg0) == _type0) &&
                     (_type1 == null || CompilerHelpers.GetType(arg1) == _type1) &&
@@ -886,7 +886,7 @@ namespace IronPython.Runtime.Types {
             }
 
             public object Call10(CallSite site, CodeContext context, TFuncType func, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9) {
-                if (func == _func &&
+                if (((BuiltinFunction)(object)func) == _func &&
                     !_info.ShouldOptimize && 
                     (_type0 == null || CompilerHelpers.GetType(arg0) == _type0) &&
                     (_type1 == null || CompilerHelpers.GetType(arg1) == _type1) &&
@@ -981,7 +981,7 @@ namespace IronPython.Runtime.Types {
             }
 
             public object Call11(CallSite site, CodeContext context, TFuncType func, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10) {
-                if (func == _func &&
+                if (((BuiltinFunction)(object)func) == _func &&
                     !_info.ShouldOptimize && 
                     (_type0 == null || CompilerHelpers.GetType(arg0) == _type0) &&
                     (_type1 == null || CompilerHelpers.GetType(arg1) == _type1) &&
@@ -1080,7 +1080,7 @@ namespace IronPython.Runtime.Types {
             }
 
             public object Call12(CallSite site, CodeContext context, TFuncType func, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11) {
-                if (func == _func &&
+                if (((BuiltinFunction)(object)func) == _func &&
                     !_info.ShouldOptimize && 
                     (_type0 == null || CompilerHelpers.GetType(arg0) == _type0) &&
                     (_type1 == null || CompilerHelpers.GetType(arg1) == _type1) &&
@@ -1183,7 +1183,7 @@ namespace IronPython.Runtime.Types {
             }
 
             public object Call13(CallSite site, CodeContext context, TFuncType func, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12) {
-                if (func == _func &&
+                if (((BuiltinFunction)(object)func) == _func &&
                     !_info.ShouldOptimize && 
                     (_type0 == null || CompilerHelpers.GetType(arg0) == _type0) &&
                     (_type1 == null || CompilerHelpers.GetType(arg1) == _type1) &&

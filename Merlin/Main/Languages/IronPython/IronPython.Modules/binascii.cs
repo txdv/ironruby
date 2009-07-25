@@ -137,7 +137,9 @@ namespace IronPython.Modules {
                         return '/';
                     default:
                         throw new InvalidOperationException(String.Format("Bad int val: {0}", val));
-                }
+                }   
+ 				// Weird but keeps mono happy for building
+				throw new InvalidOperationException(String.Format("Bad int val: {0}", val));
             });
 
             res.Append('\n');
@@ -281,6 +283,12 @@ namespace IronPython.Modules {
 
         private delegate char EncodeChar(int val);
         private delegate int DecodeByte(char val);
+
+        private static char ThrowIfMax(char val){
+	      if(val == Char.MaxValue)
+			throw new InvalidOperationException(String.Format("Bad int val: {0}", val));
+		  return val;
+}                                             
 
         private static StringBuilder EncodeWorker(string data, char empty, EncodeChar encFunc) {
             StringBuilder res = new StringBuilder();

@@ -207,7 +207,6 @@ module IronRubyUtils
   end
 
   def exec(cmd)
-    puts "executing: [#{cmd}]"
     if is_test?
       rake_output_message ">> #{cmd}"
     else
@@ -290,10 +289,11 @@ class CSProjCompiler
       if cs_args.include?('noconfig')
         cs_args.delete('noconfig')
         cmd << " /noconfig"
-      end
+      end                      
+      
       temp = Tempfile.new(name.to_s)
       cs_args.each { |opt| temp << ' /' + opt + "\n"}
-      options = get_compile_path_list(args[:csproj]).join("\n")
+      options = get_compile_path_list(args[:csproj]).join("\n")     
       temp.puts options
       temp.close
   
@@ -302,12 +302,13 @@ class CSProjCompiler
     end
   end
 
-  def get_case_sensitive_path(pathname)
+  def get_case_sensitive_path(pathname)   
+    return "../AssemblyVersion.cs" if pathname == "..\\AssemblyVersion.cs"
     elements = pathname.split '\\'
     result = Pathname.new '.'
     elements.each do |element|
       entry = result.entries.find { |p| p.downcase == element.downcase }
-      result = result + entry unless entry.nil?
+      result = result + entry unless entry.nil? 
     end
     result.to_s
   end
@@ -318,7 +319,7 @@ class CSProjCompiler
     if cs_proj_files.length == 1
       doc = REXML::Document.new(File.open(cs_proj_files.first))
       result = doc.elements.collect("/Project/ItemGroup/Compile") { |c| c.attributes['Include'] }
-      result.delete_if { |e| e =~ /(Silverlight\\SilverlightVersion.cs|System\\Dynamic\\Parameterized.System.Dynamic.cs)/ }
+      result.delete_if { |e| e =~ /(Silverlight\\SilverlightVersion.cs|System\\Dynamic\\Parameterized.System.Dynamic.cs)|\.\./ }
       result.map! { |p| get_case_sensitive_path(p) } if mono?
       result
     else
