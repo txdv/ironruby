@@ -98,11 +98,11 @@ namespace IronPython.Runtime.Exceptions {
         }
 
         internal TraceBackFrame(PythonTracebackListener traceAdapter, object code, TraceBackFrame back, PythonDebuggingPayload debugProperties, Func<Scope> scopeCallback) {
-            this._traceAdapter = traceAdapter;
-            this._code = code;
-            this._back = back;
-            this._debugProperties = debugProperties;
-            this._scopeCallback = scopeCallback;
+            _traceAdapter = traceAdapter;
+            _code = code;
+            _back = back;
+            _debugProperties = debugProperties;
+            _scopeCallback = scopeCallback;
         }
         
         public TracebackDelegate f_trace {
@@ -208,6 +208,7 @@ namespace IronPython.Runtime.Exceptions {
             var pyThread = _traceAdapter.GetCurrentThread();
             if (pyThread == null || !Type.ReferenceEquals(this, pyThread.Frames.Peek())) {
                 throw PythonOps.ValueError("f_lineno can only be set by a trace function");
+
             }
 
             FunctionCode funcCode = _debugProperties.Code;

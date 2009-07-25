@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+chmod +x build
+chmod +x deploy
+chmod +x update_binaries
+
+./build
+./deploy
+./update_binaries
+exit 0

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+./package
+echo "Deploying now."
+cp -R dist/bin/* ~/bin/
+mkdir -p ~/lib/{ironruby,ruby}
+cp -R dist/lib/* ~/lib/
+#cp -R dist/lib/ruby/* ~/lib/ruby/
+# echo "making scripts executable"
+# chmod +x ~/bin/{igem,iirb,ir,irails,irake,irdoc,iri}     
+echo "Done deploying."

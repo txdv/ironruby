@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#./build
+echo "Starting packaging..."
+#cd Merlin/Main/Languages/Ruby
+rake package mono=1 ZIP=1
+echo "Done packaging."

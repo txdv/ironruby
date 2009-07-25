@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+echo "Publishing binaries"
+cd pkg
+git ci -a -m "Updating packages"
+git push
+cd ..
+echo "Publishing sources"
+git push
+echo "Done building and publishing."
