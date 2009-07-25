@@ -57,7 +57,7 @@ task :package do
       FileUtils.mkdir_p DIST_DIR unless File.exist? DIST_DIR
       #FileUtils.rm "#{DIST_DIR}/*.tar.*"                    
       system "cd #{PACKAGE_DIR}; tar czf #{DIST_DIR}/ironruby-#{IRONRUBY_VERSION}.tar.gz *;cd #{MERLIN_ROOT}/../..;"
-      system "cd #{PACKAGE_DIR}; tar cjf #{DIST_DIR}/ironruby-#{IRONRUBY_VERSION}.tar.bz2 #{PACKAGE_DIR}/*;cd #{MERLIN_ROOT}/../..;"
+      system "cd #{PACKAGE_DIR}; tar cjf #{DIST_DIR}/ironruby-#{IRONRUBY_VERSION}.tar.bz2 *;cd #{MERLIN_ROOT}/../..;"
     else
       system %Q{del "#{ENV['TEMP']}\\ironruby.7z"}
       system %Q{"#{ENV['PROGRAM_FILES_32']}/7-Zip/7z.exe" a -bd -t7z -mx9 "#{ENV['TEMP']}\\ironruby.7z" "#{PACKAGE_DIR}\\"}
