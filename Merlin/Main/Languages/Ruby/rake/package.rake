@@ -31,10 +31,8 @@ task :package do
   # Copy binaries
   FileUtils.cp "#{BUILD_BIN}/ir.exe", "#{PACKAGE_DIR}/bin/"
   FileUtils.cp Dir.glob("#{BUILD_BIN}/IronRuby*.dll"), "#{PACKAGE_DIR}/bin"
-  FileUtils.cp "#{BUILD_BIN}/Microsoft.Scripting*.dll", "#{PACKAGE_DIR}/bin"
-#  FileUtils.cp "#{BUILD_BIN}/Microsoft.Scripting.dll", "#{PACKAGE_DIR}/bin"
+  FileUtils.cp Dir.glob("#{BUILD_BIN}/Microsoft.Scripting*.dll"), "#{PACKAGE_DIR}/bin"
   FileUtils.cp "#{BUILD_BIN}/Microsoft.Dynamic.dll", "#{PACKAGE_DIR}/bin"
-#  FileUtils.cp "#{BUILD_BIN}/Microsoft.Scripting.ExtensionAttribute.dll", "#{PACKAGE_DIR}/bin"
 
   FileUtils.cp Dir.glob("#{MERLIN_ROOT}/Languages/Ruby/Scripts/bin/*"), "#{PACKAGE_DIR}/bin"
 
