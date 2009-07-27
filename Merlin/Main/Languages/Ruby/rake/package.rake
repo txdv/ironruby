@@ -13,10 +13,10 @@
 #
 # ****************************************************************************
 
-MERLIN_ROOT           = ENV['MERLIN_ROOT'] || File.expand_path(File.dirname(__FILE__) + '/../../..')
-PACKAGE_DIR           = mono? ? "#{MERLIN_ROOT}/../../dist/#{"debug" if ENV['configuration'] == "debug"}" : 'c:\ironruby'  # directory that binary package is created in
+MERLIN_ROOT           = (ENV['MERLIN_ROOT'] || File.expand_path(File.dirname(__FILE__) + '/../../..')).gsub(/\\/, '/')     # paths need forward slashes or Dir.glob isn't happy
+PACKAGE_DIR           = mono? ? "#{MERLIN_ROOT}/../../dist/#{"debug" if ENV['configuration'] == "debug"}" : 'c:/ironruby'  # directory that binary package is created in
 BUILD_BIN             = "#{MERLIN_ROOT}/bin/#{'mono_' if mono?}#{ENV['configuration'] || "release"}"
-DIST_DIR              = mono? ? "#{MERLIN_ROOT}/../../pkg" : "C:\\"        
+DIST_DIR              = mono? ? "#{MERLIN_ROOT}/../../pkg" : "C:/"        
 IRONRUBY_VERSION      = "0.9"
 
 desc "Generate an IronRuby binary redist package from the layout"
@@ -31,10 +31,10 @@ task :package do
   # Copy binaries
   FileUtils.cp "#{BUILD_BIN}/ir.exe", "#{PACKAGE_DIR}/bin/"
   FileUtils.cp Dir.glob("#{BUILD_BIN}/IronRuby*.dll"), "#{PACKAGE_DIR}/bin"
-  FileUtils.cp "#{BUILD_BIN}/Microsoft.Scripting.Core.dll", "#{PACKAGE_DIR}/bin"
-  FileUtils.cp "#{BUILD_BIN}/Microsoft.Scripting.dll", "#{PACKAGE_DIR}/bin"
+  FileUtils.cp "#{BUILD_BIN}/Microsoft.Scripting*.dll", "#{PACKAGE_DIR}/bin"
+#  FileUtils.cp "#{BUILD_BIN}/Microsoft.Scripting.dll", "#{PACKAGE_DIR}/bin"
   FileUtils.cp "#{BUILD_BIN}/Microsoft.Dynamic.dll", "#{PACKAGE_DIR}/bin"
-  FileUtils.cp "#{BUILD_BIN}/Microsoft.Scripting.ExtensionAttribute.dll", "#{PACKAGE_DIR}/bin"
+#  FileUtils.cp "#{BUILD_BIN}/Microsoft.Scripting.ExtensionAttribute.dll", "#{PACKAGE_DIR}/bin"
 
   FileUtils.cp Dir.glob("#{MERLIN_ROOT}/Languages/Ruby/Scripts/bin/*"), "#{PACKAGE_DIR}/bin"
 
@@ -42,11 +42,10 @@ task :package do
   IronRubyCompiler.transform_config_file((mono? ? 'MonoRL' : 'Binary'), project_root + "Config/#{mono? ? "Unsigned" : "Signed"}/app.config", "#{PACKAGE_DIR}/bin/ir.exe.config")
 
   # Copy standard library
-  FileUtils.mkdir_p "#{PACKAGE_DIR}/lib/ruby" unless File.exist? "#{PACKAGE_DIR}/lib/ruby"
+  FileUtils.mkdir_p "#{PACKAGE_DIR}/lib" unless File.exist? "#{PACKAGE_DIR}/lib"
   FileUtils.cp_r "#{MERLIN_ROOT}/../External.LCA_RESTRICTED/Languages/Ruby/redist-libs/ruby", "#{PACKAGE_DIR}/lib/ruby"
   FileUtils.cp_r "#{MERLIN_ROOT}/Languages/Ruby/Libs", "#{PACKAGE_DIR}/lib/ironruby"
   
-  FileUtils.mkdir_p "#{PACKAGE_DIR}/samples" unless File.exist? "#{PACKAGE_DIR}/samples"
   FileUtils.cp_r "#{MERLIN_ROOT}/Languages/Ruby/Samples", "#{PACKAGE_DIR}/samples"    
   
   %w(igem iirb irackup irails irake irdoc iri).each { |exs| FileUtils.chmod 0755, "#{PACKAGE_DIR}/bin/#{exs}" } if mono?
@@ -62,7 +61,7 @@ task :package do
       system %Q{del "#{ENV['TEMP']}\\ironruby.7z"}
       system %Q{"#{ENV['PROGRAM_FILES_32']}/7-Zip/7z.exe" a -bd -t7z -mx9 "#{ENV['TEMP']}\\ironruby.7z" "#{PACKAGE_DIR}\\"}
       system %Q{"#{ENV['PROGRAM_FILES_32']}/7-Zip/7z.exe" a -bd -tzip -mx9 "c:\\ironruby.zip" "#{PACKAGE_DIR}\\"}
-      system %Q{copy /b /Y "#{ENV['PROGRAM_FILES_32']}\\7-Zip\\7zSD.sfx" + "#{ENV['MERLIN_ROOT']}\\Languages\\Ruby\\sfx_config.txt" + "#{ENV['TEMP']}\\ironruby.7z" "c:\\ironruby.exe"}
+      system %Q{copy /b /Y "#{ENV['PROGRAM_FILES_32']}\\7-Zip\\7zSD.sfx" + "#{MERLIN_ROOT}\\Languages\\Ruby\\sfx_config.txt" + "#{ENV['TEMP']}\\ironruby.7z" "c:\\ironruby.exe"}
     end
   end  
   
