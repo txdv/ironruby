@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
+
 echo "Building ironruby (debug version)"
-rake compile configuration=debug 
+rake compile:all configuration=debug
 echo "Building ironruby (release version)"
-rake compile configuration=release
+rake compile:all configuration=release
 echo "Done building."
+

@@ -15,7 +15,7 @@
 
 MERLIN_ROOT           = (ENV['MERLIN_ROOT'] || File.expand_path(File.dirname(__FILE__) + '/../../..')).gsub(/\\/, '/')     # paths need forward slashes or Dir.glob isn't happy
 PACKAGE_DIR           = mono? ? "#{MERLIN_ROOT}/../../dist/#{"debug" if ENV['configuration'] == "debug"}" : 'c:/ironruby'  # directory that binary package is created in
-BUILD_BIN             = "#{MERLIN_ROOT}/bin/#{'mono_' if mono?}#{ENV['configuration'] || "release"}"
+BUILD_BIN             = "#{MERLIN_ROOT}/Bin/#{'mono_' if mono?}#{ENV['configuration'] || "release"}"
 DIST_DIR              = mono? ? "#{MERLIN_ROOT}/../../pkg" : "C:/"        
 IRONRUBY_VERSION      = "0.9"
 
@@ -37,7 +37,7 @@ task :package do
   FileUtils.cp Dir.glob("#{MERLIN_ROOT}/Languages/Ruby/Scripts/bin/*"), "#{PACKAGE_DIR}/bin"
 
   # Generate ir.exe.config
-  IronRubyCompiler.transform_config_file((mono? ? 'MonoRL' : 'Binary'), project_root + "Config/#{mono? ? "Unsigned" : "Signed"}/app.config", "#{PACKAGE_DIR}/bin/ir.exe.config")
+  IronRubyCompiler.transform_config_file((mono? ? 'MonoRL' : 'Binary'), project_root + "Config/#{mono? ? "Unsigned" : "Signed"}/App.config", "#{PACKAGE_DIR}/bin/ir.exe.config")
 
   # Copy standard library
   FileUtils.mkdir_p "#{PACKAGE_DIR}/lib" unless File.exist? "#{PACKAGE_DIR}/lib"

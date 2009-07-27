@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+source /usr/src/devenv.sh
+export MERLIN_ROOT=/usr/src/integrity/builds/mletterle-ironruby-linux/Merlin/Main
+./build
+./package
