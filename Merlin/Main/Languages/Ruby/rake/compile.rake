@@ -80,8 +80,4 @@ namespace :compile do
 end
 
 desc "compile everything"
-if mono?
-  task :compile => %w{happy clean_build compile:dlr compile:ruby compile:libraries compile:console compile:generator compile:yaml } # compile:testhost }
-else
-  task :compile => %w{happy clean_build compile:dlr compile:ruby compile:libraries compile:console compile:testhost compile:generator compile:yaml}
-end
+task :compile => %w{happy clean_build compile:dlr compile:ruby compile:libraries compile:console compile:testhost compile:generator compile:yaml}

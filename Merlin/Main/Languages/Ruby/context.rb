@@ -459,7 +459,7 @@ IronRubyCompiler = CSProjCompiler.new do
           :dir        => './Console',
           :csproj     => 'Ruby.Console.csproj'
           
-  test_runner :references => ['Microsoft.Scripting.Core.dll', 'Microsoft.Scripting.dll', 'IronRuby.dll', 'IronRuby.Libraries.dll', '!System.dll', '!System.Windows.Forms.dll'],
+  test_runner :references => ['Microsoft.Scripting.Core.dll', 'Microsoft.Scripting.dll', 'Microsoft.Scripting.ExtensionAttribute.dll', 'IronRuby.dll', 'IronRuby.Libraries.dll', '!System.dll', '!System.Windows.Forms.dll'],
               :output     => 'IronRuby.Tests.exe',
               :dir        => './IronRuby.Tests',
               :csproj     => 'IronRuby.Tests.csproj'
