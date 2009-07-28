@@ -46,13 +46,13 @@ task :package do
   
   FileUtils.cp_r "#{MERLIN_ROOT}/Languages/Ruby/Samples", "#{PACKAGE_DIR}/samples"    
   
-  %w(igem iirb irackup irails irake irdoc iri).each { |exs| FileUtils.chmod 0755, "#{PACKAGE_DIR}/bin/#{exs}" } if mono?
+  %w(igem iirb irackup irails irake irdoc iri ir).each { |exs| FileUtils.chmod 0755, "#{PACKAGE_DIR}/bin/#{exs}" } if mono?
 
   # Generate compressed package
   if ENV['ZIP']
     if mono?       
       FileUtils.mkdir_p DIST_DIR unless File.exist? DIST_DIR
-      #FileUtils.rm "#{DIST_DIR}/*.tar.*"                    
+      FileUtils.rm "#{DIST_DIR}/*.tar.*"                    
       system "cd #{PACKAGE_DIR}; tar czf #{DIST_DIR}/ironruby-#{IRONRUBY_VERSION}.tar.gz *;cd #{MERLIN_ROOT}/../..;"
       system "cd #{PACKAGE_DIR}; tar cjf #{DIST_DIR}/ironruby-#{IRONRUBY_VERSION}.tar.bz2 *;cd #{MERLIN_ROOT}/../..;"
     else
