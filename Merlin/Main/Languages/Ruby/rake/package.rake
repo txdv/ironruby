@@ -28,9 +28,11 @@ task :package do
   # Copy Licenses
   FileUtils.cp Dir.glob("#{MERLIN_ROOT}/Languages/Ruby/Licenses/*"), PACKAGE_DIR
   
-  # Copy binaries
-  FileUtils.cp "#{BUILD_BIN}/ir.exe", "#{PACKAGE_DIR}/bin/"
-  FileUtils.cp Dir.glob("#{BUILD_BIN}/IronRuby*.dll"), "#{PACKAGE_DIR}/bin"
+  # Copy binaries    
+  %w(ir ipy ipyw).each { |cmd| FileUtils.cp "#{BUILD_BIN}/#{cmd}.exe", "#{PACKAGE_DIR}/bin/" }
+  
+  FileUtils.cp Dir.glob("#{BUILD_BIN}/IronRuby*.dll"), "#{PACKAGE_DIR}/bin"   
+  FileUtils.cp Dir.glob("#{BUILD_BIN}/IronPython*.dll"), "#{PACKAGE_DIR}/bin"
   FileUtils.cp Dir.glob("#{BUILD_BIN}/Microsoft.Scripting*.dll"), "#{PACKAGE_DIR}/bin"
   FileUtils.cp "#{BUILD_BIN}/Microsoft.Dynamic.dll", "#{PACKAGE_DIR}/bin"
 
