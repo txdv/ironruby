@@ -52,7 +52,7 @@ task :package do
   if ENV['ZIP']
     if mono?       
       FileUtils.mkdir_p DIST_DIR unless File.exist? DIST_DIR
-      FileUtils.rm "#{DIST_DIR}/*.tar.*"                    
+      system "rm #{DIST_DIR}/*"                    
       system "cd #{PACKAGE_DIR}; tar czf #{DIST_DIR}/ironruby-#{IRONRUBY_VERSION}.tar.gz *;cd #{MERLIN_ROOT}/../..;"
       system "cd #{PACKAGE_DIR}; tar cjf #{DIST_DIR}/ironruby-#{IRONRUBY_VERSION}.tar.bz2 *;cd #{MERLIN_ROOT}/../..;"
     else
