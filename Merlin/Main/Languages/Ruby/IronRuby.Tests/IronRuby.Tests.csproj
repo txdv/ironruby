@@ -30,14 +30,14 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\Bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;$(SignedSym)</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\bin\Release\</OutputPath>
+    <OutputPath>..\..\..\Bin\Release\</OutputPath>
     <DefineConstants>TRACE;$(SignedSym)</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
