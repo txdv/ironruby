@@ -1,25 +1,31 @@
 require 'optparse'
 require 'singleton'
-
+      
 class IRTest
+  
+  def mono?
+    return true if ENV['mono']
+    ENV['OS'] != "Windows_NT"
+  end
+  
   include Singleton
   attr_accessor :options  
   def initialize
     @options = {}
     @results = ["Results:"]
     @root = ENV["MERLIN_ROOT"]
-    mspec_base = "mspec ci -fd"
-    ir = "#{@root}\\bin\\debug\\ir.exe"
+    mspec_base = "mspec-ci -fd"
+    ir = "#{"mono" if mono?} #{@root}/Bin/#{mono? ? "mono_d" : "D"}ebug/ir.exe"
     @start = Time.now
     @suites = {
-      :Smoke => "#{@root}\\Languages\\Ruby\\Tests\\Scripts\\irtest.bat",
-      :Legacy => "#{@root}\\Languages\\Ruby\\Tests\\run.bat",
+      # :Smoke => (mono? ? "ruby #{@root}/Languages/Ruby/Tests/Scripts/irtest.rb" : "#{@root}/Languages/Ruby/Tests/Scripts/irtest.bat"),
+      # :Legacy => (mono? ? "ruby #{@root}/Languages/Ruby/Tests/run.rb -checkin" : "#{@root}/Languages/Ruby/Tests/run.bat"),
       :RubySpec_A => "#{mspec_base} :lang :cli :netinterop :cominterop :thread, :netcli",
       :RubySpec_B => "#{mspec_base} :core1 :lib1",
       :RubySpec_C => "#{mspec_base} :core2 :lib2",
-      :RubyGems => "#{ir} #{@root}\\Languages\\Ruby\\Tests\\Scripts\\RubyGemsTests.rb",
-      :Rake => "#{ir} #{@root}\\Languages\\Ruby\\Tests\\Scripts\\RakeTests.rb",
-      :Yaml => "#{ir} #{@root}\\..\\External.LCA_RESTRICTED\\Languages\\IronRuby\\yaml\\YamlTest\\yaml_test_suite.rb"
+      :RubyGems => "#{ir} #{@root}/Languages/Ruby/Tests/Scripts/RubyGemsTests.rb",
+      :Rake => "#{ir} #{@root}/Languages/Ruby/Tests/Scripts/RakeTests.rb",
+      :Yaml => "#{ir} #{@root}/../External.LCA_RESTRICTED/Languages/IronRuby/yaml/YamlTest/yaml_test_suite.rb" 
     }
   end
 
@@ -51,7 +57,8 @@ class IRTest
   def kill
     %w{ir.exe ipy.exe}.each do |app|
       3.times do
-        system "taskkill /f /im #{app} > nul: 2>&1"
+         
+          system (mono? ? "ps aux|grep '#{app}'|awk '{print $2;}'|xargs kill" : "taskkill /f /im #{app} > nul: 2>&1")
       end
     end
   end
@@ -61,17 +68,17 @@ class IRTest
       puts "Skipping compile step..."
       return
     end
-    msbuild "Ruby\\Ruby.sln"
-    msbuild "IronPython\\IronPython.sln"
+    msbuild "Ruby/Ruby.sln"
+    msbuild "IronPython/IronPython.sln"
 
-    if File.exists?(file = "#{@root}\\Scripts\\Python\\GenerateSystemCoreCsproj.py")
-      cmd = "#{@root}\\Bin\\Debug\\ipy.exe #{file}"
+    if File.exists?(file = "#{@root}/Scripts/Python/GenerateSystemCoreCsproj.py")
+      cmd = "#{@root}/Bin/#{mono? ? "mono_d" : "D"}ebug/ipy.exe #{file}"
       run_cmd(cmd) { @results << "Dev10 Build failed!!!" }
     end
   end
 
   def msbuild(project)
-    cmd = "msbuild.exe /verbosity:minimal #{@root}\\Languages\\#{project} /p:Configuration=\"Debug\""
+    cmd = "#{mono? ? "x" : "ms"}build#{ ".exe" unless mono?} /verbosity:minimal #{@root}/Languages/#{project} /p:Configuration=\"Debug\""
     run_cmd(cmd) { exit 1 }
   end
 
@@ -88,7 +95,8 @@ class IRTest
     if options[:parallel]
       cmd = "start \"#{title}\" #{test}"
     else
-      puts title
+      puts title      
+      puts "Executing command: #{test}"
       cmd = test
     end
     time(title)

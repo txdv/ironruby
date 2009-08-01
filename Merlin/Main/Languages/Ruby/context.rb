@@ -383,6 +383,7 @@ class CSProjCompiler
     # signing is on for IronRuby in Merlin, off for SVN and Binary
     layout = {'Merlin' => { :LibraryPaths => '..\..\Languages\Ruby\libs;..\..\..\External.LCA_RESTRICTED\Languages\Ruby\Ruby-1.8.6p287\lib\ruby\site_ruby\1.8;..\..\..\External.LCA_RESTRICTED\Languages\Ruby\Ruby-1.8.6p287\lib\ruby\site_ruby;..\..\..\External.LCA_RESTRICTED\Languages\Ruby\Ruby-1.8.6p287\lib\ruby\1.8' }, 
               'Binary' => { :LibraryPaths => '..\lib\IronRuby;..\lib\ruby\site_ruby\1.8;..\lib\ruby\site_ruby;..\lib\ruby\1.8' },
+              'MerlinMono' => { :LibraryPaths => '../../Languages/Ruby/libs;../../../External.LCA_RESTRICTED/Languages/Ruby/Ruby-1.8.6p287/lib/ruby/site_ruby/1.8;../../../External.LCA_RESTRICTED/Languages/Ruby/Ruby-1.8.6p287/lib/ruby/site_ruby;../../../External.LCA_RESTRICTED/Languages/Ruby/Ruby-1.8.6p287/lib/ruby/1.8' }, 
               'MonoRL' => { :LibraryPaths => '../lib;../lib/ironruby;../lib/ruby/site_ruby/1.8/;../lib/ruby/site_ruby/;../lib/ruby/1.8/' } }
     
     transform_config source_path, target_build_path, layout[configuration][:LibraryPaths]
@@ -391,7 +392,7 @@ class CSProjCompiler
   def move_config(name = "ir.exe.config")
     source = project_root + "Config/Unsigned/App.config"
     config_file = build_path + name
-    transform_config_file(mono? ? 'MonoRL' : 'Merlin', source, config_file)
+    transform_config_file(mono? ? ((ENV['configuration']||:debug).to_sym == :debug ? 'MerlinMono' : 'MonoRL' ) : 'Merlin', source, config_file)
   end
 
   def method_missing(name, *args)

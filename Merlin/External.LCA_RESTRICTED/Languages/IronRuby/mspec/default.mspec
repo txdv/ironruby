@@ -9,19 +9,32 @@ if (ENV["THISISSNAP"] || ENV["SILENTASSERT"]) && engine == 'ironruby'
   end
   System::Diagnostics::Debug.Listeners.clear
   System::Diagnostics::Debug.Listeners.add(MyTraceListener.new)
+end       
+
+def mono?
+  return true if ENV['mono']
+  ENV['OS'] != "Windows_NT"
+end 
+
+def ir_cmd
+  if mono?       
+    "mono #{ENV['MERLIN_ROOT']}/Bin/mono_debug/ir.exe -X:Interpret "
+  else    
+    "#{ENV['MERLIN_ROOT']}/Test/Scripts/ir.cmd" unless mono?
+  end
 end
 
 class MSpecScript
   # The default implementation to run the specs.
-  set :target, "#{ENV['MERLIN_ROOT']}\\Test\\Scripts\\ir.cmd"
+  set :target, ir_cmd
   # config[:prefix] must be set before filtered is used
-  set :prefix, "#{ENV['MERLIN_ROOT']}\\..\\External.LCA_RESTRICTED\\Languages\\IronRuby\\mspec\\rubyspec"
+  set :prefix, "#{ENV['MERLIN_ROOT']}/../External.LCA_RESTRICTED/Languages/IronRuby/mspec/rubyspec"
   
   set :core1sub1,filtered("core","[ac-i]")
   set :core1sub2,[ #want to keep basicobject out of the 1.8 list
-    "core\\bignum",
-    "core\\binding",
-    "core\\builtin_constants"
+    "core/bignum",
+    "core/binding",
+    "core/builtin_constants"
   ]
   set :core2, filtered("core", "[j-z]").reject{|el| el =~ /thread/i}
   set :lang, [
@@ -34,20 +47,20 @@ class MSpecScript
   set :lib2, filtered("library", "[p-z]")
   #.NET interop
   set :netinterop, [
-    "..\\..\\..\\..\\..\\Main\\Languages\\Ruby\\Tests\\Interop\\net"
+    "../../../../../Main/Languages/Ruby/Tests/Interop/net"
     ]
   
   set :netcli, [
-    "..\\..\\..\\..\\..\\Main\\Languages\\Ruby\\Tests\\Interop\\cli"
+    "../../../../../Main/Languages/Ruby/Tests/Interop/cli"
     ]
 
   set :cominterop, [
-    "..\\..\\..\\..\\..\\Main\\Languages\\Ruby\\Tests\\Interop\\com"
+    "../../../../../Main/Languages/Ruby/Tests/Interop/com"
     ]
   
   set :thread, [
-    "core\\thread",
-    "core\\threadgroup"
+    "core/thread",
+    "core/threadgroup"
     ]
 
   #combination tasks

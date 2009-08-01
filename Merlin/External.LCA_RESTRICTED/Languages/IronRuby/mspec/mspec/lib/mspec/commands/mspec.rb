@@ -8,6 +8,13 @@ require 'mspec/utils/script'
 require 'mspec/helpers/tmp'
 require 'mspec/runner/actions/timer'
 
+# module Kernel
+#   alias_method :old_exec, :exec
+#   def exec(command, *args)
+#     puts "excuting: #{command} #{args.join(" ")}"
+#     exec command} #{args.join(" ")}"
+#   end
+# end    
 
 class MSpecMain < MSpecScript
   def initialize
@@ -149,7 +156,7 @@ class MSpecMain < MSpecScript
 
     if config[:multi] and config[:command] == "ci"
       multi_exec argv
-    else
+    else       
       exec config[:target], *argv
     end
   end
