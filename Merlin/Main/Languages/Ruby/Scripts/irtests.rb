@@ -20,9 +20,9 @@ class IRTest
     @suites = {
       # :Smoke => (mono? ? "ruby #{@root}/Languages/Ruby/Tests/Scripts/irtest.rb" : "#{@root}/Languages/Ruby/Tests/Scripts/irtest.bat"),
       # :Legacy => (mono? ? "ruby #{@root}/Languages/Ruby/Tests/run.rb -checkin" : "#{@root}/Languages/Ruby/Tests/run.bat"),
-      # :RubySpec_A => "#{mspec_base} :lang :cli :netinterop :cominterop :thread, :netcli",
-      # :RubySpec_B => "#{mspec_base} :core1 :lib1",
-      # :RubySpec_C => "#{mspec_base} :core2 :lib2",
+      :RubySpec_A => "#{mspec_base} :lang :cli :netinterop :cominterop :thread, :netcli",
+      :RubySpec_B => "#{mspec_base} :core1 :lib1",
+      :RubySpec_C => "#{mspec_base} :core2 :lib2",      
       :RubyGems => "#{ir} #{@root}/Languages/Ruby/Tests/Scripts/RubyGemsTests.rb",
       :Rake => "#{ir} #{@root}/Languages/Ruby/Tests/Scripts/RakeTests.rb",
       :Yaml => "#{ir} #{@root}/../External.LCA_RESTRICTED/Languages/IronRuby/yaml/YamlTest/yaml_test_suite.rb" 
