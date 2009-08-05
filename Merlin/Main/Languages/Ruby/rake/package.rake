@@ -14,8 +14,8 @@
 # ****************************************************************************
 
 MERLIN_ROOT           = (ENV['MERLIN_ROOT'] || File.expand_path(File.dirname(__FILE__) + '/../../..')).gsub(/\\/, '/')     # paths need forward slashes or Dir.glob isn't happy
-PACKAGE_DIR           = mono? ? "#{MERLIN_ROOT}/../../dist#{"-debug" if ENV['configuration'] == "debug"}" : 'c:/ironruby'  # directory that binary package is created in
-PYTHON_PACKAGE_DIR    = mono? ? "#{MERLIN_ROOT}/../../python-dist#{"-debug" if ENV['configuration'] == "debug"}" : 'c:/ironpython'  # directory that binary package is created in
+PACKAGE_DIR           = mono? ? "#{MERLIN_ROOT}/../../dist/ironruby#{"-debug" if ENV['configuration'] == "debug"}" : 'c:/ironruby'  # directory that binary package is created in
+PYTHON_PACKAGE_DIR    = mono? ? "#{MERLIN_ROOT}/../../python-dist/ironpython#{"-debug" if ENV['configuration'] == "debug"}" : 'c:/ironpython'  # directory that binary package is created in
 BUILD_BIN             = "#{MERLIN_ROOT}/Bin/#{'mono_' if mono?}#{ENV['configuration'] || "release"}"
 DIST_DIR              = mono? ? "#{MERLIN_ROOT}/../../pkg" : "C:/"        
 IRONRUBY_VERSION      = `git rev-parse HEAD`[0..6] # replace to version for a release "0.9"
