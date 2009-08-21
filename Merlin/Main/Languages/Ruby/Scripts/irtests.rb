@@ -12,7 +12,7 @@ class IRTest
   attr_accessor :options  
   def initialize
     @options = {}
-    @results = ["Results:"]
+    @results = ["irtests FAILURES:"]
     @root = ENV["MERLIN_ROOT"]
     mspec_base = "mspec-ci -fd"
     ir = "#{"mono" if mono?} #{@root}/Bin/#{mono? ? "mono_d" : "D"}ebug/ir.exe"
@@ -108,14 +108,16 @@ class IRTest
   end
   
   def report
+    puts "=" * 70
     exit_code = if @results.size == 1
-      puts "Success!!"
+      puts "IRTESTS PASSED!!"
       0
     else
       puts @results.join("\n")
       1
     end
-    
+
+    puts    
     time("Finished")
     time("Total Elapsed time: ", @start)
     exit exit_code

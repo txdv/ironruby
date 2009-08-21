@@ -26,3 +26,8 @@ bin
 pkg/
 dist/
 python-dist/
+*.sln.cache
+*.vshost.exe
+*.vshost.exe.manifest
+.eprj
+*_S*
