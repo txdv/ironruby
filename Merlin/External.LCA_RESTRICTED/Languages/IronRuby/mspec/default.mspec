@@ -23,7 +23,9 @@ def ir_cmd
     "#{ENV['MERLIN_ROOT']}/Test/Scripts/ir.cmd" unless mono?
   end
 end
-
+if engine == 'ironruby'
+  $" << "resolv.rb"
+end
 class MSpecScript
   # The default implementation to run the specs.
   set :target, ir_cmd

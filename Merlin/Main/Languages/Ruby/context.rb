@@ -296,7 +296,6 @@ class CSProjCompiler
       options = get_compile_path_list(args[:csproj]).join("\n")     
       temp.puts options
       temp.close
-  
       cmd << " @" << temp.path
       exec cmd
     end
@@ -349,10 +348,10 @@ class CSProjCompiler
     references = Configuration.get_references(clr)
     refs.each do |ref|
       references << if ref =~ /^\!/
-        resolve_framework_path(ref[1..-1])
-      else
-        (build_path + ref).relative_path_from(working_dir)
-      end
+                      resolve_framework_path(ref[1..-1])
+                    else
+                      (build_path + ref)
+                    end
     end if refs
     references
   end
