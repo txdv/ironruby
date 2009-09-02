@@ -2,20 +2,28 @@ require 'optparse'
 require 'singleton'
       
 class IRTest
-  
   def mono?
     return true if ENV['mono']
     ENV['OS'] != "Windows_NT"
   end
   
   include Singleton
+
   attr_accessor :options  
-  def initialize
-    @options = {}
+  
+  def initialize(options)
+    @options = options
+    
+    @config = (options[:clr4] ? "V4 " : "") + (options[:release] ? "Release" : "Debug")
+    @sl_config = "Silverlight " + (options[:release] ? "Release" : "Debug")
+    
     @results = ["irtests FAILURES:"]
     @root = ENV["MERLIN_ROOT"]
     mspec_base = "mspec-ci -fd"
     ir = "#{"mono" if mono?} #{@root}/Bin/#{mono? ? "mono_d" : "D"}ebug/ir.exe"
+    @bin = "#{@root}/bin/#{@config}"
+    ENV["ROWAN_BIN"] = @bin
+       
     @start = Time.now
     @suites = {
       # :Smoke => (mono? ? "ruby #{@root}/Languages/Ruby/Tests/Scripts/irtest.rb" : "#{@root}/Languages/Ruby/Tests/Scripts/irtest.bat"),
@@ -33,7 +41,7 @@ class IRTest
   def self.method_missing(meth, *args, &blk)
     self.instance.send(meth, *args, &blk)
   end
-
+  
   def run
     time("Starting")
     kill
@@ -65,7 +73,7 @@ class IRTest
   
   def prereqs
     if git?
-      autocrlf = `git.cmd config core.autocrlf`
+      autocrlf = `git config core.autocrlf`
       message = %{
         Please do 'git config core.autocrlf true'        
         Everyone should have autocrlf=true (the default value) so that the GIT blobs always use \\n
@@ -91,15 +99,18 @@ class IRTest
       puts "Skipping compile step..."
       return
     end
-    msbuild "Ruby/Ruby.sln"
-    msbuild "IronPython/IronPython.sln"
+
+    sln = @options[:clr4] ? "4.sln" : ".sln"  
+    msbuild "Ruby/Ruby" + sln
+    msbuild "IronPython/IronPython" + sln
 
     if File.exists?(file = "#{@root}/Scripts/Python/GenerateSystemCoreCsproj.py")
       cmd = "#{@root}/Bin/#{mono? ? "mono_d" : "D"}ebug/ipy.exe #{file}"
+
       run_cmd(cmd) { @results << "Dev10 Build failed!!!" }
     end
     
-    build_sl
+    build_sl unless @options[:clr4]
   end
 
   def msbuild(project)
@@ -110,10 +121,10 @@ class IRTest
   def build_sl
     options = ""
     if git?
-      program_files = ENV['PROGRAM_FILES_32'] ? ENV['PROGRAM_FILES_32'] : ENV['ProgramFiles']
+      program_files = ENV['ProgramFiles(x86)'] ? ENV['ProgramFiles(x86)'] : ENV['ProgramFiles']
       # Patches change the version number
       sl_path_candidates = ["3.0.40624.0", "3.0.40723.0"].map {|ver| "#{program_files}\\Microsoft Silverlight\\#{ver}" }
-      sl_path = sl_path_candidates.first {|p| File.exist? p }
+      sl_path = sl_path_candidates.select {|p| File.exist? p }.first
       if sl_path
         options = "/p:SilverlightPath=\"#{sl_path}\""
       else
@@ -122,8 +133,13 @@ class IRTest
       end
     end
     
-    msbuild "Hosts\\Silverlight\\Silverlight.sln", '"Silverlight Debug"', options
-   end
+    msbuild "Hosts/Silverlight/Silverlight.sln", @sl_config, options
+  end
+
+  def msbuild(project, build_config = @config, options = "")
+    cmd = "#{mono? ? "xbuild" : "msbuild.exe"} /verbosity:minimal #{@root}\\#{project} /p:Configuration=\"#{build_config}\" #{options}"
+    run_cmd(cmd) { exit 1 }
+  end
    
   def test_all
     @suites.each_key do |key|
@@ -147,6 +163,7 @@ class IRTest
   end
 
   def run_cmd(cmd, &blk)
+    puts cmd if $DEBUG
     blk.call unless system cmd
   end
   
@@ -168,17 +185,27 @@ class IRTest
 end
 
 if $0 == __FILE__
+  iroptions = {}
+
   OptionParser.new do |opts|
     opts.banner = "Usage: irtests.rb [options]"
 
     opts.separator ""
 
     opts.on("-p", "--[no-]parallel", "Run in parallel") do |p|
-      IRTest.options[:parallel] = p
+      iroptions[:parallel] = p
     end
 
     opts.on("-n", "--nocompile", "Don't compile before running") do |n|
-      IRTest.options[:nocompile] = n
+      iroptions[:nocompile] = n
+    end
+    
+    opts.on("-4", "--clr4", "Use CLR4 configuration") do |n|
+      iroptions[:clr4] = n
+    end
+    
+    opts.on("-r", "--release", "Use Release configurations") do |n|
+      iroptions[:release] = n
     end
     
     opts.on_tail("-h", "--help", "Show this message") do |n|
@@ -187,5 +214,5 @@ if $0 == __FILE__
     end
   end.parse!
 
-  IRTest.run
+  IRTest.new(iroptions).run
 end
