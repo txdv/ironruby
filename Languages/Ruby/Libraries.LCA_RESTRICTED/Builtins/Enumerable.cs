@@ -478,6 +478,7 @@ namespace IronRuby.Builtins {
             return result;
         }
 
+
         [RubyMethod("minmax")]
         public static object GetExtremes(CallSiteStorage<EachSite>/*!*/ each, ComparisonStorage/*!*/ comparisonStorage, BlockParam comparer, object self) {
             bool hasOddItem = false, hasMinMax = false, blockJumped = false;
@@ -486,13 +487,14 @@ namespace IronRuby.Builtins {
 
             object min = null, max = null;
 
-            Each(each, self, Proc.Create(each.Context, delegate(BlockParam/*!*/ selfBlock, object _, object item) {
+	    Proc blockProc =  Proc.Create(each.Context, delegate(BlockParam/*!*/ selfBlock, object _, object item) {
                 if (hasOddItem) {
                     hasOddItem = false;
 
                     int? compareResult = CompareItems(comparisonStorage, oddItem, item, comparer, out blockResult);
                     if (compareResult == null) {
-                        goto BlockJumped;
+		      blockJumped = true;
+		      return selfBlock.PropagateFlow(comparer, blockResult);
                     }
                     if (compareResult > 0) {
                         // oddItem > item
@@ -505,7 +507,8 @@ namespace IronRuby.Builtins {
                     if (hasMinMax) {
                         compareResult = CompareItems(comparisonStorage, oddItem, min, comparer, out blockResult);
                         if (compareResult == null) {
-                            goto BlockJumped;
+			  blockJumped = true;
+			  return selfBlock.PropagateFlow(comparer, blockResult);
                         }
                         if (compareResult < 0) {
                             // oddItem < min
@@ -514,7 +517,8 @@ namespace IronRuby.Builtins {
 
                         compareResult = CompareItems(comparisonStorage, item, max, comparer, out blockResult);
                         if (compareResult == null) {
-                            goto BlockJumped;
+			  blockJumped = true;
+			  return selfBlock.PropagateFlow(comparer, blockResult);
                         }
                         if (compareResult > 0) {
                             // item > max
@@ -532,10 +536,9 @@ namespace IronRuby.Builtins {
 
                 return null;
 
-            BlockJumped:
-                blockJumped = true;
-                return selfBlock.PropagateFlow(comparer, blockResult);
-            }));
+             });
+
+            Each(each, self, blockProc);
 
             if (blockJumped) {
                 return blockResult;
