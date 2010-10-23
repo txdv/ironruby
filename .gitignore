@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Snippets.debug.scripting.dll
 Snippets.debug.scripting.pdb
 Snippets.scripting.dll
@@ -32,3 +33,6 @@ python-dist/
 *.vshost.exe.manifest
 .eprj
 *_S*
+=======
+*_name_S*
+>>>>>>> master
