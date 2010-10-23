@@ -22,7 +22,7 @@ namespace Microsoft.Scripting.Utils {
     public static class MonitorUtils {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference")]
         public static void Enter(object obj, ref bool lockTaken) {
-#if CLR2
+#if CLR2 || MONO
             Monitor.Enter(obj);
             lockTaken = true;
 #else
@@ -32,7 +32,7 @@ namespace Microsoft.Scripting.Utils {
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference")]
         public static bool TryEnter(object obj, ref bool lockTaken) {
-#if CLR2
+#if CLR2 || MONO
             return lockTaken = Monitor.TryEnter(obj);
 #else
             Monitor.TryEnter(obj, ref lockTaken);
